@@ -1,49 +1,53 @@
 using Godot;
 using Godot.Collections;
-using OneInfection.src.Utils;
+using OneInfection.Src.NikoScene;
+using OneInfection.Src.NikoWindowScene;
+using OneInfection.Src.Utils;
 using System;
 
-public partial class Main : Node2D
+namespace OneInfection.Src.MainScene
 {
-    [Export]
-    private Node2D subWindows;
-
-    [Export]
-    private Niko niko;
-
-    [Export]
-    private NikoWindow nikoWindow;
-
-    [Export]
-    private Control dialogBox;
-
-    [Export]
-    private AnimationPlayer animationPlayer;
-
-    [Export]
-    private Timer windowShakeTimer;
-
-    private Window mainWindow;
-
-    private Vector2I windowPosition;
-
-    public override void _Ready()
+    public partial class Main : Node2D
     {
-        mainWindow = GetWindow();
+        [Export]
+        private Node2D subWindows;
 
-        foreach (var child in subWindows.GetChildren())
+        [Export]
+        private Niko niko;
+
+        [Export]
+        private NikoWindow nikoWindow;
+
+        [Export]
+        private Control dialogBox;
+
+        [Export]
+        private AnimationPlayer animationPlayer;
+
+        [Export]
+        private Timer windowShakeTimer;
+
+        private Window mainWindow;
+
+        private Vector2I windowPosition;
+
+        public override void _Ready()
         {
-            if (child is Window window)
-            {
-                window.World2D = mainWindow.World2D;
-            }
-            else
-            {
-                throw new Exception("All child of SubWindows should be type of Window");
-            }
-        }
+            mainWindow = GetWindow();
 
-        dialogBox.Call("play", new Array<Array<Variant>>()
+            foreach (var child in subWindows.GetChildren())
+            {
+                if (child is Window window)
+                {
+                    window.World2D = mainWindow.World2D;
+                }
+                else
+                {
+                    throw new Exception("All child of SubWindows should be type of Window");
+                }
+            }
+
+            dialogBox.Call("play", new Array<Array<Variant>>()
         {
             new()
             {
@@ -51,18 +55,18 @@ public partial class Main : Node2D
             }
         });
 
-        dialogBox.Connect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
-    }
+            dialogBox.Connect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
+        }
 
-    private void GoodbyeDialogFinished()
-    {
-        animationPlayer.Play("goodbye_niko");
-        dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
-    }
+        private void GoodbyeDialogFinished()
+        {
+            animationPlayer.Play("goodbye_niko");
+            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
+        }
 
-    public void SomethingIsWrongWithTWM()
-    {
-        dialogBox.Call("play", new Array<Array<Variant>>()
+        public void SomethingIsWrongWithTWM()
+        {
+            dialogBox.Call("play", new Array<Array<Variant>>()
         {
             new()
             {
@@ -105,12 +109,12 @@ public partial class Main : Node2D
             },
         });
 
-        dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
-    }
+            dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
+        }
 
-    public void VirusInfectingTWM()
-    {
-        dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
+        public void VirusInfectingTWM()
+        {
+            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
 
         windowPosition = mainWindow.Position;
 
@@ -128,8 +132,8 @@ public partial class Main : Node2D
             },
         });
 
-        dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
-    }
+            dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
+        }
 
     public void VirusTakingOverTWMDialog()
     {
@@ -138,7 +142,7 @@ public partial class Main : Node2D
         windowShakeTimer.Stop();
         mainWindow.Position = windowPosition;
 
-        dialogBox.Call("play", new Array<Array<Variant>>()
+            dialogBox.Call("play", new Array<Array<Variant>>()
         {
             new()
             {
@@ -213,31 +217,32 @@ public partial class Main : Node2D
         mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
     }
 
-    private void OnFirstHouseGoOutside()
-    {
-        niko.Speed *= 2;
-
-        Vector2I initialWindowPosition = DisplayServer.WindowGetPosition();
-        Vector2I initialWindowSize = DisplayServer.WindowGetSize();
-
-        Vector2I nikoWindowOffset = initialWindowPosition;
-
-        nikoWindowOffset.X += initialWindowSize.X / 2 - nikoWindow.Size.X / 2 + 10;
-        nikoWindowOffset.Y += initialWindowSize.Y - nikoWindow.Size.Y / 2 - 32;
-
-        niko.IsBright = false;
-        nikoWindow.Visible = true;
-        niko.IsOutside = true;
-
-        niko.Position = Utils.ToWorldPosition(nikoWindowOffset);
-    }
-
-    public override void _Process(double delta)
-    {
-
-        if (niko.IsOutside)
+        private void OnFirstHouseGoOutside()
         {
-            nikoWindow.Position = Utils.ToScreenPosition((Vector2I)niko.Position);
+            niko.Speed *= 2;
+
+            Vector2I initialWindowPosition = DisplayServer.WindowGetPosition();
+            Vector2I initialWindowSize = DisplayServer.WindowGetSize();
+
+            Vector2I nikoWindowOffset = initialWindowPosition;
+
+            nikoWindowOffset.X += initialWindowSize.X / 2 - nikoWindow.Size.X / 2 + 10;
+            nikoWindowOffset.Y += initialWindowSize.Y - nikoWindow.Size.Y / 2 - 32;
+
+            niko.IsBright = false;
+            nikoWindow.Visible = true;
+            niko.IsOutside = true;
+
+            niko.Position = Util.ToWorldPosition(nikoWindowOffset);
+        }
+
+        public override void _Process(double delta)
+        {
+
+            if (niko.IsOutside)
+            {
+                nikoWindow.Position = Util.ToScreenPosition((Vector2I)niko.Position);
+            }
         }
     }
 }

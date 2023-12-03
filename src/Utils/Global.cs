@@ -2,7 +2,7 @@
 
 using Godot;
 
-namespace OneInfection.src.Utils
+namespace OneInfection.Src.Utils
 {
     public static class Global
     {

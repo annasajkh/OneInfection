@@ -1,10 +1,11 @@
-﻿// Ignore Spelling: Utils
+﻿// Ignore Spelling: Util
 
 using Godot;
 
-namespace OneInfection.src.Utils
+
+namespace OneInfection.Src.Utils
 {
-    public static class Utils
+    public static class Util
     {
         public static Vector2I ToWorldPosition(Vector2I screenPosition)
         {
