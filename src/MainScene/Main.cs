@@ -9,6 +9,8 @@ namespace OneInfection.Src.MainScene
 {
     public partial class Main : Node2D
     {
+        public bool IsMainWindowShaking { get; set; }
+
         [Export]
         private Node2D subWindows;
 
@@ -48,12 +50,12 @@ namespace OneInfection.Src.MainScene
             }
 
             dialogBox.Call("play", new Array<Array<Variant>>()
-        {
-            new()
             {
-                "niko/niko2", "Goodbye, Player...", 0.5f
-            }
-        });
+                new()
+                {
+                    "niko/niko2", "Goodbye, Player...", 0.5f
+                }
+            });
 
             dialogBox.Connect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
         }
@@ -67,47 +69,47 @@ namespace OneInfection.Src.MainScene
         public void SomethingIsWrongWithTWM()
         {
             dialogBox.Call("play", new Array<Array<Variant>>()
-        {
-            new()
             {
-                "en/en_distressed_meow", "Wait Niko...", 2
-            },
+                new()
+                {
+                    "en/en_distressed_meow", "Wait Niko...", 2
+                },
 
-            new()
-            {
-                "niko/niko", "The World Machine? what happened?", 0.1f
-            },
+                new()
+                {
+                    "niko/niko", "The World Machine? what happened?", 0.1f
+                },
 
-            new()
-            {
-                "en/en_distressed_meow", "There....", 0.1f
-            },
+                new()
+                {
+                    "en/en_distressed_meow", "There....", 0.1f
+                },
 
-            new()
-            {
-                "en/en_distressed_talk", "Is....", 0.1f
-            },
+                new()
+                {
+                    "en/en_distressed_talk", "Is....", 0.1f
+                },
 
-            new()
-            {
-                "en/en_distressed_meow", "Something....", 0.1f
-            },
+                new()
+                {
+                    "en/en_distressed_meow", "Something....", 0.1f
+                },
 
-            new()
-            {
-                "en/en_distressed_talk", "Wrong....", 0.1f
-            },
+                new()
+                {
+                    "en/en_distressed_talk", "Wrong....", 0.1f
+                },
 
-            new()
-            {
-                "en/en_distressed_meow", "With....", 0.1f
-            },
+                new()
+                {
+                    "en/en_distressed_meow", "With....", 0.1f
+                },
 
-            new()
-            {
-                "en/en_distressed_talk", "Me....", 0.1f
-            },
-        });
+                new()
+                {
+                    "en/en_distressed_talk", "Me....", 0.1f
+                },
+            });
 
             dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
         }
@@ -116,19 +118,20 @@ namespace OneInfection.Src.MainScene
         {
             dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
 
-            windowShakeTimer.Start();
-            dialogBox.Call("play", new Array<Array<Variant>>()
-        {
-            new()
-            {
-                "en/en_shock", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 0.1f
-            },
+            IsMainWindowShaking = true;
 
-            new()
+            dialogBox.Call("play", new Array<Array<Variant>>()
             {
-                "virus/virus_shock", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 0.1f
-            },
-        });
+                new()
+                {
+                    "en/en_shock", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 0.1f
+                },
+
+                new()
+                {
+                    "virus/virus_shock", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 0.1f
+                },
+            });
 
             dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
         }
@@ -139,77 +142,66 @@ namespace OneInfection.Src.MainScene
         {
             dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
 
-            windowShakeTimer.Stop();
+            IsMainWindowShaking = false;
             mainWindow.MoveToCenter();
 
             dialogBox.Call("play", new Array<Array<Variant>>()
-        {
-            new()
             {
-                "virus/virus_83c", "Well hello there", 0.1f
-            },
+                new()
+                {
+                    "virus/virus_83c", "Well hello there", 0.1f
+                },
 
-            new()
-            {
-                "niko/niko", "The World Machine is everything alright? what just happened?", 0.1f
-            },
+                new()
+                {
+                    "niko/niko", "The World Machine is everything alright? what just happened?", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus5", "Oh? The World Machine?", 0.1f
-            },
+                new()
+                {
+                    "virus/virus5", "Oh? The World Machine?", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus_83c", "so you call them \"The World Machine\" very interesting", 0.1f
-            },
+                new()
+                {
+                    "virus/virus_83c", "so you call them \"The World Machine\" very interesting", 0.1f
+                },
 
-            new()
-            {
-                "niko/niko", "Who are you? what did you do to The World Machine?", 0.1f
-            },
+                new()
+                {
+                    "niko/niko", "Who are you? what did you do to The World Machine?", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus_smile", "I'm a virus and i just infected The World Machine", 0.1f
-            },
+                new()
+                {
+                    "virus/virus_smile", "I'm a virus and i just infected The World Machine", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus_83c", "so this is why you call them \"The World Machine\" because there is a little simulation in here", 0.1f
-            },
+                new()
+                {
+                    "virus/virus_83c", "so this is why you call them \"The World Machine\" because there is a little simulation in here", 0.1f
+                },
 
-            new()
-            {
-                "niko/niko", "don't you dare do anything with the simulation", 0.1f
-            },
+                new()
+                {
+                    "niko/niko", "don't you dare do anything with the simulation", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus2", "Ugh i can't! it seems like there some sort of protection in here", 0.1f
-            },
+                new()
+                {
+                    "virus/virus2", "Ugh i can't! it seems like there some sort of protection in here", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus_smile", "Is it you? are you the protection?", 0.1f
-            },
+                new()
+                {
+                    "virus/virus_smile", "Is it you? are you the protection?", 0.1f
+                },
 
-            new()
-            {
-                "virus/virus_83c", "well let me find that out by infecting you", 0.1f
-            }
-        });
-        }
-
-
-        private void OnWindowShakeTimerTimeout()
-        {
-            mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
-
-            if (GD.RandRange(0, 3) == 0)
-            {
-                mainWindow.MoveToCenter();
-            }
+                new()
+                {
+                    "virus/virus_83c", "well let me find that out by infecting you", 0.1f
+                }
+            });
         }
 
         private void OnFirstHouseGoOutside()
@@ -233,6 +225,15 @@ namespace OneInfection.Src.MainScene
 
         public override void _Process(double delta)
         {
+            if (IsMainWindowShaking)
+            {
+                mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
+
+                if (GD.RandRange(0, 3) == 0)
+                {
+                    mainWindow.MoveToCenter();
+                }
+            }
 
             if (niko.IsOutside)
             {
