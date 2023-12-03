@@ -51,7 +51,7 @@ _data = {
 "goodbye_niko": SubResource("Animation_pfkmk")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("subWindows", "niko", "nikoWindow", "dialogBox", "animationPlayer", "windowShakeTimer")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("subWindows", "niko", "nikoWindow", "dialogBox", "animationPlayer")]
 position = Vector2(151, 228)
 script = ExtResource("1_dc7x5")
 subWindows = NodePath("SubWindows")
@@ -59,7 +59,6 @@ niko = NodePath("Niko")
 nikoWindow = NodePath("SubWindows/NikoWindow")
 dialogBox = NodePath("World/CanvasLayer/DialogBox")
 animationPlayer = NodePath("AnimationPlayer")
-windowShakeTimer = NodePath("WindowShakeTimer")
 
 [node name="World" type="Node2D" parent="."]
 
@@ -95,8 +94,4 @@ libraries = {
 "": SubResource("AnimationLibrary_4ngi3")
 }
 
-[node name="WindowShakeTimer" type="Timer" parent="."]
-wait_time = 0.01
-
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
-[connection signal="timeout" from="WindowShakeTimer" to="." method="OnWindowShakeTimerTimeout"]

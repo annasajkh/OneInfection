@@ -9,6 +9,8 @@ namespace OneInfection.Src.MainScene
 {
     public partial class Main : Node2D
     {
+        public bool IsMainWindowShaking { get; set; }
+
         [Export]
         private Node2D subWindows;
 
@@ -116,15 +118,14 @@ namespace OneInfection.Src.MainScene
         {
             dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
 
-        windowPosition = mainWindow.Position;
+            IsMainWindowShaking = true;
 
-        windowShakeTimer.Start();
-        dialogBox.Call("play", new Array<Array<Variant>>()
-        {
-            new()
+            dialogBox.Call("play", new Array<Array<Variant>>()
             {
-                "en/en_shock", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 0.1f
-            },
+                new()
+                {
+                    "en/en_shock", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 0.1f
+                },
 
                 new()
                 {
@@ -135,12 +136,14 @@ namespace OneInfection.Src.MainScene
             dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
         }
 
-    public void VirusTakingOverTWMDialog()
-    {
-        dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
 
-        windowShakeTimer.Stop();
-        mainWindow.Position = windowPosition;
+
+        public void VirusTakingOverTWMDialog()
+        {
+            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
+
+            IsMainWindowShaking = false;
+            mainWindow.MoveToCenter();
 
             dialogBox.Call("play", new Array<Array<Variant>>()
             {
@@ -194,28 +197,12 @@ namespace OneInfection.Src.MainScene
                     "virus/virus_smile", "Is it you? are you the protection?", 0.1f
                 },
 
-            new()
-            {
-                "virus/virus_83c", "well let me find that out by infecting you", 0.1f
-            }
-        });
-
-		dialogBox.Connect("dialog_finished", new Callable(this, nameof(BattleStart)));
-	}
-
-    private void BattleStart()
-    {
-		dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(BattleStart)));
-
-        // here we starting our fight
-
-
-	}
-
-    private void OnWindowShakeTimerTimeout()
-    {
-        mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
-    }
+                new()
+                {
+                    "virus/virus_83c", "well let me find that out by infecting you", 0.1f
+                }
+            });
+        }
 
         private void OnFirstHouseGoOutside()
         {
@@ -238,6 +225,15 @@ namespace OneInfection.Src.MainScene
 
         public override void _Process(double delta)
         {
+            if (IsMainWindowShaking)
+            {
+                mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
+
+                if (GD.RandRange(0, 3) == 0)
+                {
+                    mainWindow.MoveToCenter();
+                }
+            }
 
             if (niko.IsOutside)
             {
