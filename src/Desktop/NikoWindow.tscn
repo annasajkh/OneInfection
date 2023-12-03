@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgnp8tcmx4epg"]
+
+[ext_resource type="Script" path="res://src/Desktop/NikoWindow.cs" id="1_58ooc"]
+
+[node name="NikoWindow" type="Window" node_paths=PackedStringArray("camera")]
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+initial_position = 1
+size = Vector2i(400, 400)
+unresizable = true
+borderless = true
+always_on_top = true
+transparent = true
+unfocusable = true
+mouse_passthrough = true
+script = ExtResource("1_58ooc")
+camera = NodePath("Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)

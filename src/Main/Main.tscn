@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyxrjlxhqk1is"]
+
+[ext_resource type="Script" path="res://src/Main/Main.cs" id="1_dc7x5"]
+[ext_resource type="PackedScene" uid="uid://cc01bx6vo4ddt" path="res://src/FirstHouse/FirstHouse.tscn" id="2_8n7n2"]
+[ext_resource type="PackedScene" uid="uid://doicf1tsiunbq" path="res://src/Niko/Niko.tscn" id="3_tmrfw"]
+[ext_resource type="PackedScene" uid="uid://cgnp8tcmx4epg" path="res://src/Desktop/NikoWindow.tscn" id="4_rkojq"]
+[ext_resource type="PackedScene" uid="uid://do806tj6p8qkh" path="res://src/DialogBox/DialogBox.tscn" id="5_iopbl"]
+[ext_resource type="PackedScene" uid="uid://bnfxb0c5xpqyv" path="res://src/OutsideDialogBox/OutsideDialogBox.tscn" id="5_qpoyb"]
+
+[sub_resource type="Animation" id="Animation_w2gk2"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_pfkmk"]
+resource_name = "goodbye_niko"
+length = 2.8
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Niko")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [3, 2.1],
+"method": &"AutoWalk"
+}, {
+"args": [2],
+"method": &"Face"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SomethingIsWrongWithTWM"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ngi3"]
+_data = {
+"RESET": SubResource("Animation_w2gk2"),
+"goodbye_niko": SubResource("Animation_pfkmk")
+}
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("subWindows", "niko", "nikoWindow", "dialogBox", "animationPlayer", "windowShakeTimer")]
+position = Vector2(151, 228)
+script = ExtResource("1_dc7x5")
+subWindows = NodePath("SubWindows")
+niko = NodePath("Niko")
+nikoWindow = NodePath("SubWindows/NikoWindow")
+dialogBox = NodePath("World/CanvasLayer/DialogBox")
+animationPlayer = NodePath("AnimationPlayer")
+windowShakeTimer = NodePath("WindowShakeTimer")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="FirstHouse" parent="World" instance=ExtResource("2_8n7n2")]
+position = Vector2(-151, -228)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="World"]
+
+[node name="DialogBox" parent="World/CanvasLayer" node_paths=PackedStringArray("outside_dialog_box", "niko") instance=ExtResource("5_iopbl")]
+visible = false
+outside_dialog_box = NodePath("../../../Niko/OutsideDialogBox")
+niko = NodePath("../../../Niko")
+
+[node name="Niko" parent="." instance=ExtResource("3_tmrfw")]
+position = Vector2(14, -2)
+metadata/_edit_group_ = true
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Niko"]
+
+[node name="OutsideDialogBox" parent="Niko" instance=ExtResource("5_qpoyb")]
+visible = false
+position = Vector2(0, -49)
+
+[node name="SubWindows" type="Node2D" parent="."]
+
+[node name="NikoWindow" parent="SubWindows" node_paths=PackedStringArray("positionToView", "niko") instance=ExtResource("4_rkojq")]
+visible = false
+positionToView = NodePath("../../Niko/RemoteTransform2D")
+niko = NodePath("../../Niko")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4ngi3")
+}
+
+[node name="WindowShakeTimer" type="Timer" parent="."]
+wait_time = 0.01
+
+[connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
+[connection signal="timeout" from="WindowShakeTimer" to="." method="OnWindowShakeTimerTimeout"]

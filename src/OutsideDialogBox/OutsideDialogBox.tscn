@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnfxb0c5xpqyv"]
+
+[ext_resource type="Script" path="res://src/OutsideDialogBox/OutsideDialogBox.gd" id="1_oxstg"]
+[ext_resource type="Texture2D" uid="uid://cmirw1ljmdkke" path="res://assets/textures/dialog_box/niko_outside_dialogbox.png" id="2_nhn04"]
+[ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/font/Terminus TTF Bold.ttf" id="3_okd37"]
+[ext_resource type="AudioStream" uid="uid://bfg53plxmr3e1" path="res://assets/sounds/normal_dialog.wav" id="4_hjwoj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1npdf"]
+font = ExtResource("3_okd37")
+font_size = 9
+
+[node name="OutsideDialogBox" type="Node2D"]
+script = ExtResource("1_oxstg")
+
+[node name="BackGround" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_nhn04")
+
+[node name="TextEntry" type="Label" parent="."]
+offset_left = -58.0
+offset_top = -29.0
+offset_right = 57.0
+offset_bottom = 21.0
+label_settings = SubResource("LabelSettings_1npdf")
+autowrap_mode = 3
+
+[node name="SpeakDelay" type="Timer" parent="."]
+
+[node name="DialogSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_hjwoj")
+volume_db = -5.0
+
+[node name="AcceptTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="SpeakDelay" to="." method="_on_speak_delay_timeout"]
+[connection signal="timeout" from="AcceptTimer" to="." method="_on_accept_timer_timeout"]

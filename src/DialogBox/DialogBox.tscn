@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://do806tj6p8qkh"]
+
+[ext_resource type="Script" path="res://src/DialogBox/DialogBox.gd" id="1_xxaen"]
+[ext_resource type="Texture2D" uid="uid://br2t1h5vl6fkm" path="res://assets/textures/dialog_box/dialog_box.png" id="2_q2vq2"]
+[ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/font/Terminus TTF Bold.ttf" id="3_hlb5a"]
+[ext_resource type="Texture2D" uid="uid://cmvai3ew4kxqo" path="res://assets/textures/faces/niko/niko2.png" id="3_pjm8a"]
+[ext_resource type="AudioStream" uid="uid://bfg53plxmr3e1" path="res://assets/sounds/normal_dialog.wav" id="5_bvocf"]
+[ext_resource type="Texture2D" uid="uid://cbjgst7kxuljh" path="res://assets/textures/dialog_box/continue_dialog_arrow.png" id="6_3o016"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_obsky"]
+font = ExtResource("3_hlb5a")
+font_size = 9
+
+[sub_resource type="Animation" id="Animation_flbl1"]
+resource_name = "up_and_down"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(151, 60), Vector2(151, 61), Vector2(151, 60), Vector2(151, 59)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u6ow8"]
+_data = {
+"up_and_down": SubResource("Animation_flbl1")
+}
+
+[node name="DialogBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xxaen")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 616.0
+offset_bottom = 136.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_q2vq2")
+
+[node name="FaceIcon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 16.0
+offset_right = 304.0
+offset_bottom = 64.0
+texture = ExtResource("3_pjm8a")
+
+[node name="TextEntry" type="Label" parent="."]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 248.0
+offset_bottom = 64.0
+label_settings = SubResource("LabelSettings_obsky")
+autowrap_mode = 3
+
+[node name="SpeakDelay" type="Timer" parent="."]
+
+[node name="DialogSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_bvocf")
+volume_db = -5.0
+
+[node name="ContinueDialogArrow" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 60.0
+offset_right = 200.0
+offset_bottom = 91.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_3o016")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ContinueDialogArrow"]
+libraries = {
+"": SubResource("AnimationLibrary_u6ow8")
+}
+
+[node name="AcceptTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="SpeakDelay" to="." method="_on_speak_delay_timeout"]
+[connection signal="timeout" from="AcceptTimer" to="." method="_on_accept_timer_timeout"]
