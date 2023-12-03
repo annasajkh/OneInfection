@@ -136,6 +136,8 @@ public partial class Main : Node2D
         dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
 
         windowShakeTimer.Stop();
+        mainWindow.MoveToCenter();
+
         dialogBox.Call("play", new Array<Array<Variant>>()
         {
             new()
@@ -198,7 +200,7 @@ public partial class Main : Node2D
 
     private void OnWindowShakeTimerTimeout()
     {
-        mainWindow.Position += new Vector2I(GD.RandRange(-10, 10), GD.RandRange(-10, 10));
+        mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
 
         if (GD.RandRange(0, 3) == 0)
         {
