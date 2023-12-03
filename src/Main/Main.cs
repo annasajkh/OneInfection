@@ -112,6 +112,8 @@ public partial class Main : Node2D
     {
         dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
 
+        windowPosition = mainWindow.Position;
+
         windowShakeTimer.Start();
         dialogBox.Call("play", new Array<Array<Variant>>()
         {
@@ -129,14 +131,12 @@ public partial class Main : Node2D
         dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
     }
 
-
-
     public void VirusTakingOverTWMDialog()
     {
         dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWMDialog)));
 
         windowShakeTimer.Stop();
-        mainWindow.MoveToCenter();
+        mainWindow.Position = windowPosition;
 
         dialogBox.Call("play", new Array<Array<Variant>>()
         {
@@ -195,17 +195,22 @@ public partial class Main : Node2D
                 "virus/virus_83c", "well let me find that out by infecting you", 0.1f
             }
         });
-    }
 
+		dialogBox.Connect("dialog_finished", new Callable(this, nameof(BattleStart)));
+	}
+
+    private void BattleStart()
+    {
+		dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(BattleStart)));
+
+        // here we starting our fight
+
+
+	}
 
     private void OnWindowShakeTimerTimeout()
     {
         mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
-
-        if (GD.RandRange(0, 3) == 0)
-        {
-            mainWindow.MoveToCenter();
-        }
     }
 
     private void OnFirstHouseGoOutside()
