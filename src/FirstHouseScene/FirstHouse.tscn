@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cc01bx6vo4ddt"]
 
-[ext_resource type="Script" path="res://src/FirstHouse/FirstHouse.cs" id="1_rjpkv"]
+[ext_resource type="Script" path="res://Src/FirstHouseScene/FirstHouse.cs" id="1_rjpkv"]
 [ext_resource type="Texture2D" uid="uid://cosatnkcswaag" path="res://assets/textures/first_house.png" id="2_5hvyf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftgpy"]

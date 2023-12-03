@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cgnp8tcmx4epg"]
 
-[ext_resource type="Script" path="res://src/Desktop/NikoWindow.cs" id="1_58ooc"]
+[ext_resource type="Script" path="res://Src/NikoWindowScene/NikoWindow.cs" id="1_58ooc"]
 
 [node name="NikoWindow" type="Window" node_paths=PackedStringArray("camera")]
 transparent_bg = true
