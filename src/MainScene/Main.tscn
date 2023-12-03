@@ -96,7 +96,7 @@ libraries = {
 }
 
 [node name="WindowShakeTimer" type="Timer" parent="."]
-wait_time = 0.05
+wait_time = 0.01
 
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
 [connection signal="timeout" from="WindowShakeTimer" to="." method="OnWindowShakeTimerTimeout"]
