@@ -26,9 +26,6 @@ namespace OneInfection.Src.MainScene
         [Export]
         private AnimationPlayer animationPlayer;
 
-        [Export]
-        private Timer windowShakeTimer;
-
         private Window mainWindow;
 
         private Vector2I windowPosition;
@@ -202,6 +199,17 @@ namespace OneInfection.Src.MainScene
                     "virus/virus_83c", "well let me find that out by infecting you", 0.1f
                 }
             });
+
+            dialogBox.Connect("dialog_finished", new Callable(this, nameof(BattleStart)));
+        }
+
+        private void BattleStart()
+        {
+            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(BattleStart)));
+
+            // here we starting our fight
+
+
         }
 
         private void OnFirstHouseGoOutside()
