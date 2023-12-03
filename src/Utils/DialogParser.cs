@@ -16,27 +16,17 @@ namespace OneInfection.src.Utils
 		public float delayToNext;
 	}
 
-	public class DialogParser
+	public static class DialogParser
 	{
-		private List<DialogItem> dialogItems = new List<DialogItem>();
-		private Control dialogBox;
-
-		public DialogParser(Control DialogBox)
+		public static Array<Array<Variant>> Parse(string pathToScenario)
 		{
-			dialogBox = DialogBox;
-		}
-
-		public void LoadDialogScenario(string pathToScenario)
-		{
+			var dialogItems = new List<DialogItem>();
 			using (StreamReader r = new StreamReader(pathToScenario))
 			{
 				string json = r.ReadToEnd();
 				dialogItems = JsonSerializer.Deserialize<List<DialogItem>>(json);
 			}
-		}
 
-		public void Play()
-		{
 			var array = new Array<Array<Variant>>();
 
 			for(int i = 0; i < dialogItems.Count; i++)
@@ -50,7 +40,7 @@ namespace OneInfection.src.Utils
 					});
 			}
 
-			dialogBox.Call("play", array);
+			return array;
 		}
 	}
 }
