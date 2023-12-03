@@ -26,9 +26,6 @@ namespace OneInfection.Src.MainScene
         [Export]
         private AnimationPlayer animationPlayer;
 
-        [Export]
-        private Timer windowShakeTimer;
-
         private Window mainWindow;
 
         private Vector2I windowPosition;
