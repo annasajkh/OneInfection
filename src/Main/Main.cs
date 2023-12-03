@@ -236,3 +236,5 @@ public partial class Main : Node2D
         }
     }
 }
+
+// this comment leaves hope
