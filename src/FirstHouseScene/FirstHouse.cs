@@ -2,7 +2,6 @@ using Godot;
 
 namespace OneInfection.Src.FirstHouseScene
 {
-
     public partial class FirstHouse : Node2D
     {
         [Signal]

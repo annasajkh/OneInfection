@@ -2,7 +2,6 @@ using Godot;
 
 namespace OneInfection.Src.NikoScene
 {
-
     public partial class Niko : CharacterBody2D
     {
         public Direction CurrentDirection { get; set; } = Direction.Down;

@@ -1,0 +1,67 @@
+[
+  {
+    "face": "virus/virus_83c",
+    "dialog": "Well hello there",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "niko/niko",
+    "dialog": "The World Machine is everything alright? what just happened?",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus5",
+    "dialog": "Oh? The World Machine?",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus_83c",
+    "dialog": "so you call them \"The World Machine\" very interesting",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "niko/niko",
+    "dialog": "Who are you? what did you do to The World Machine?",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus_smile",
+    "dialog": "I'm a virus and i just infected The World Machine",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus_83c",
+    "dialog": "so this is why you call them \"The World Machine\" because there is a little simulation in here",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "niko/niko",
+    "dialog": "don't you dare do anything with the simulation",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus2",
+    "dialog": "Ugh i can't! it seems like there some sort of protection in here",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus_smile",
+    "dialog": "Is it you? are you the protection?",
+    "delayToNext": 0.1
+  },
+
+  {
+    "face": "virus/virus_83c",
+    "dialog": "well let me find that out by infecting you",
+    "delayToNext": 0.1
+  }
+]
