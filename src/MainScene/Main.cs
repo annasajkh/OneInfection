@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using OneInfection.src.Utils;
 using OneInfection.Src.NikoScene;
 using OneInfection.Src.NikoWindowScene;
 using OneInfection.Src.Utils;
@@ -65,7 +66,8 @@ namespace OneInfection.Src.MainScene
 
         public void SomethingIsWrongWithTWM()
         {
-            dialogBox.Call("play", new Array<Array<Variant>>()
+			dialogBox.Call("play", DialogParser.Parse("assets/dialog/SomethingIsWrongWithTWM.json"));
+/*            dialogBox.Call("play", new Array<Array<Variant>>()
             {
                 new()
                 {
@@ -106,7 +108,7 @@ namespace OneInfection.Src.MainScene
                 {
                     "en/en_distressed_talk", "Me....", 0.1f
                 },
-            });
+            });*/
 
             dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
         }
