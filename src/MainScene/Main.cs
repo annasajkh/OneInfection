@@ -96,6 +96,7 @@ namespace OneInfection.Src.MainScene
 
             // here we starting our fight
 
+            niko.IsControlled = true;
 
         }
 

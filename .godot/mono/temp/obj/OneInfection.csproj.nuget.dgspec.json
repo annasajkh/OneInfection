@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Programming\\Godot 4 Mono\\OneInfection\\OneInfection.csproj": {}
+    "D:\\PROJECTS\\PROGRAMMING\\GODOT 4 MONO\\ONEINFECTION\\OneInfection.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Programming\\Godot 4 Mono\\OneInfection\\OneInfection.csproj": {
+    "D:\\PROJECTS\\PROGRAMMING\\GODOT 4 MONO\\ONEINFECTION\\OneInfection.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Programming\\Godot 4 Mono\\OneInfection\\OneInfection.csproj",
+        "projectUniqueName": "D:\\PROJECTS\\PROGRAMMING\\GODOT 4 MONO\\ONEINFECTION\\OneInfection.csproj",
         "projectName": "OneInfection",
-        "projectPath": "D:\\Projects\\Programming\\Godot 4 Mono\\OneInfection\\OneInfection.csproj",
+        "projectPath": "D:\\PROJECTS\\PROGRAMMING\\GODOT 4 MONO\\ONEINFECTION\\OneInfection.csproj",
         "packagesPath": "C:\\Users\\Annas\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Programming\\Godot 4 Mono\\OneInfection\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "D:\\PROJECTS\\PROGRAMMING\\GODOT 4 MONO\\ONEINFECTION\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Users\\Annas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
