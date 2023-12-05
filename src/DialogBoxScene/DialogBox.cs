@@ -1,5 +1,6 @@
 using Godot;
 using OneInfection.Src.NikoScene;
+using OneInfection.Src.OutsideDialogBoxScene;
 using OneInfection.Src.Utils;
 using System.Collections.Generic;
 
