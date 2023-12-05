@@ -1,6 +1,6 @@
 using Godot;
 
-namespace OneInfection.Src.NikoScene
+namespace OneInfection.Src.NikoScenes.NikoScene
 {
     public partial class Niko : CharacterBody2D
     {

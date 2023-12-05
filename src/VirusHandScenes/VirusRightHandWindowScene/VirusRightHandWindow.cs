@@ -1,16 +1,12 @@
-using Godot;
+using OneInfection.Src.Windows;
 
-namespace OneInfection.Src.VirusHands.VirusRightHand
+namespace OneInfection.Src.VirusHandScenes.VirusRightHandWindowScene
 {
-    public partial class VirusRightHandWindow : Window
+    public partial class VirusRightHandWindow : ViewWindow
     {
-        [Export] private RemoteTransform2D positionToView;
-
-        [Export] private Camera2D camera;
-
         public override void _Ready()
         {
-            positionToView.RemotePath = camera.GetPath();
+            base._Ready();
         }
     }
 }

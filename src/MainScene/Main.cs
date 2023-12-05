@@ -1,7 +1,7 @@
 using Godot;
-using OneInfection.Src.DialogBoxScene;
-using OneInfection.Src.NikoScene;
-using OneInfection.Src.NikoWindowScene;
+using OneInfection.Src.DialogBoxScenes.DialogBoxScene;
+using OneInfection.Src.NikoScenes.NikoScene;
+using OneInfection.Src.NikoScenes.NikoWindowScene;
 using OneInfection.Src.Utils;
 using System;
 

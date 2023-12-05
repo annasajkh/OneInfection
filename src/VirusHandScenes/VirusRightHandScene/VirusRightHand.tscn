@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxt24a8odprx1"]
+
+[ext_resource type="Script" path="res://Src/VirusHandScenes/VirusRightHandScene/VirusRightHand.cs" id="1_imvn5"]
+[ext_resource type="Texture2D" uid="uid://dim2qeafrycdl" path="res://assets/textures/virus/virus_hand_left_idle.png" id="2_eg4po"]
+
+[node name="VirusRightHand" type="Node2D"]
+script = ExtResource("1_imvn5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_eg4po")

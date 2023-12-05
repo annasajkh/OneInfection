@@ -1,11 +1,8 @@
 using Godot;
-using OneInfection.Src.NikoScene;
-using OneInfection.Src.OutsideDialogBoxScene;
-using OneInfection.Src.Utils;
-using System.Collections.Generic;
-using OneInfection.Src.DialogBoxScene;
 using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
 using OneInfection.Src.NikoScenes.NikoScene;
+using OneInfection.Src.Utils;
+using System.Collections.Generic;
 
 
 namespace OneInfection.Src.DialogBoxScenes.DialogBoxScene
