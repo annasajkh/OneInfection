@@ -11,7 +11,6 @@ namespace OneInfection.Src.VirusHands.VirusRightHand
         public override void _Ready()
         {
             positionToView.RemotePath = camera.GetPath();
-
         }
     }
 }
