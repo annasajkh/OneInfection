@@ -52,7 +52,6 @@ namespace OneInfection.Src.DialogBoxScene
 
         private void SetNextDialogBox()
         {
-            // If it's at the end of the conversation
             if (currentConversationIndex > conversation.Count - 1)
             {
                 speakDelay.Stop();
@@ -98,7 +97,6 @@ namespace OneInfection.Src.DialogBoxScene
         }
 
 
-        // Called every frame. 'delta' is the elapsed time since the previous frame.
         public override void _Process(double delta)
         {
             if (conversationFinished)

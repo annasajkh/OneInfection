@@ -2,97 +2,100 @@ using Godot;
 using OneInfection.Src.Utils;
 using System.Collections.Generic;
 
-public partial class OutsideDialogBox : Node2D
+namespace OneInfection.Src.OutsideDialogBoxScene
 {
-    [Export] private Label dialog;
-    [Export] private Timer speakDelay;
-    [Export] private AudioStreamPlayer dialogSound;
-    [Export] private Timer acceptTimer;
-
-    [Signal] public delegate void ConversationFinishedEventHandler();
-
-    private float charPerSeconds = 60;
-    private int currentConversationIndex;
-    private bool conversationFinished;
-    private bool dialogPaused;
-
-    private List<DialogItem> conversation;
-
-    public override void _Ready()
+    public partial class OutsideDialogBox : Node2D
     {
-        Visible = false;
-        dialogSound.Stream = GD.Load<AudioStream>("res://assets/sounds/normal_dialog.wav");
-    }
+        [Export] private Label dialog;
+        [Export] private Timer speakDelay;
+        [Export] private AudioStreamPlayer dialogSound;
+        [Export] private Timer acceptTimer;
 
-    public void Play(List<DialogItem> conversation)
-    {
-        Visible = true;
-        currentConversationIndex = 0;
-        this.conversation = conversation;
+        [Signal] public delegate void ConversationFinishedEventHandler();
 
-        SetNextDialogBox();
-    }
+        private float charPerSeconds = 60;
+        private int currentConversationIndex;
+        private bool conversationFinished;
+        private bool dialogPaused;
 
-    private void SetNextDialogBox()
-    {
-        if (currentConversationIndex > conversation.Count - 1)
+        private List<DialogItem> conversation;
+
+        public override void _Ready()
         {
-            speakDelay.Stop();
             Visible = false;
-            EmitSignal(SignalName.ConversationFinished);
-
-            return;
+            dialogSound.Stream = GD.Load<AudioStream>("res://assets/sounds/normal_dialog.wav");
         }
 
-        dialog.VisibleCharacters = 0;
-
-        acceptTimer.WaitTime = conversation[currentConversationIndex].delayToNext;
-        dialog.Text = conversation[currentConversationIndex].dialog;
-
-
-        currentConversationIndex++;
-
-        speakDelay.WaitTime = dialog.Text.Length / (dialog.Text.Length * charPerSeconds);
-        speakDelay.Start();
-    }
-
-
-    public override void _Process(double delta)
-    {
-        if (Input.IsActionJustPressed("ui_accept") && conversationFinished)
+        public void Play(List<DialogItem> conversation)
         {
+            Visible = true;
+            currentConversationIndex = 0;
+            this.conversation = conversation;
+
             SetNextDialogBox();
-            conversationFinished = false;
         }
 
-        if (Input.IsActionJustPressed("ui_accept") && dialogPaused)
+        private void SetNextDialogBox()
         {
+            if (currentConversationIndex > conversation.Count - 1)
+            {
+                speakDelay.Stop();
+                Visible = false;
+                EmitSignal(SignalName.ConversationFinished);
+
+                return;
+            }
+
+            dialog.VisibleCharacters = 0;
+
+            acceptTimer.WaitTime = conversation[currentConversationIndex].delayToNext;
+            dialog.Text = conversation[currentConversationIndex].dialog;
+
+
+            currentConversationIndex++;
+
+            speakDelay.WaitTime = dialog.Text.Length / (dialog.Text.Length * charPerSeconds);
             speakDelay.Start();
-            dialogPaused = false;
         }
-    }
 
 
-    #region Signal receivers
-    private void OnSpeakDelayTimeout()
-    {
-        dialog.VisibleCharacters++;
-
-        if (dialog.VisibleCharacters < dialog.Text.Length - 4 && !dialogSound.Playing)
+        public override void _Process(double delta)
         {
-            dialogSound.Play();
+            if (Input.IsActionJustPressed("ui_accept") && conversationFinished)
+            {
+                SetNextDialogBox();
+                conversationFinished = false;
+            }
+
+            if (Input.IsActionJustPressed("ui_accept") && dialogPaused)
+            {
+                speakDelay.Start();
+                dialogPaused = false;
+            }
         }
 
-        if (dialog.VisibleCharacters == dialog.Text.Length)
+
+        #region Signal receivers
+        private void OnSpeakDelayTimeout()
         {
-            speakDelay.Stop();
-            acceptTimer.Start();
-        }
-    }
+            dialog.VisibleCharacters++;
 
-    private void OnAcceptTimerTimeout()
-    {
-        conversationFinished = true;
+            if (dialog.VisibleCharacters < dialog.Text.Length - 4 && !dialogSound.Playing)
+            {
+                dialogSound.Play();
+            }
+
+            if (dialog.VisibleCharacters == dialog.Text.Length)
+            {
+                speakDelay.Stop();
+                acceptTimer.Start();
+            }
+        }
+
+        private void OnAcceptTimerTimeout()
+        {
+            conversationFinished = true;
+        }
+        #endregion
     }
-    #endregion
 }
