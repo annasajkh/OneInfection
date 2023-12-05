@@ -67,9 +67,9 @@ position = Vector2(-151, -228)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="World"]
 
-[node name="DialogBox" parent="World/CanvasLayer" node_paths=PackedStringArray("outside_dialog_box", "niko") instance=ExtResource("5_iopbl")]
+[node name="DialogBox" parent="World/CanvasLayer" node_paths=PackedStringArray("outsideDialogBox", "niko") instance=ExtResource("5_iopbl")]
 visible = false
-outside_dialog_box = NodePath("../../../Niko/OutsideDialogBox")
+outsideDialogBox = NodePath("../../../Niko/OutsideDialogBox")
 niko = NodePath("../../../Niko")
 
 [node name="Niko" parent="." instance=ExtResource("3_tmrfw")]

@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dero3d0outurp"
-path="res://.godot/imported/Terminus TTF Bold.ttf-1fed92881e54806630043b6aec1a8d27.fontdata"
+path="res://.godot/imported/Terminus TTF Bold.ttf-04862bd46964a97a4294e962e112882d.fontdata"
 
 [deps]
 
-source_file="res://assets/font/Terminus TTF Bold.ttf"
-dest_files=["res://.godot/imported/Terminus TTF Bold.ttf-1fed92881e54806630043b6aec1a8d27.fontdata"]
+source_file="res://assets/fonts/Terminus TTF Bold.ttf"
+dest_files=["res://.godot/imported/Terminus TTF Bold.ttf-04862bd46964a97a4294e962e112882d.fontdata"]
 
 [params]
 

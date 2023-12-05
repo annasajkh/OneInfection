@@ -1,22 +1,26 @@
 [gd_scene load_steps=6 format=3 uid="uid://bnfxb0c5xpqyv"]
 
-[ext_resource type="Script" path="res://Src/OutsideDialogBoxScene/OutsideDialogBox.gd" id="1_oxstg"]
+[ext_resource type="Script" path="res://Src/OutsideDialogBoxScene/OutsideDialogBox.cs" id="1_sht7a"]
 [ext_resource type="Texture2D" uid="uid://cmirw1ljmdkke" path="res://assets/textures/dialog_box/niko_outside_dialogbox.png" id="2_nhn04"]
-[ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/font/Terminus TTF Bold.ttf" id="3_okd37"]
+[ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/fonts/Terminus TTF Bold.ttf" id="3_okd37"]
 [ext_resource type="AudioStream" uid="uid://bfg53plxmr3e1" path="res://assets/sounds/normal_dialog.wav" id="4_hjwoj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1npdf"]
 font = ExtResource("3_okd37")
 font_size = 9
 
-[node name="OutsideDialogBox" type="Node2D"]
-script = ExtResource("1_oxstg")
+[node name="OutsideDialogBox" type="Node2D" node_paths=PackedStringArray("dialog", "speakDelay", "dialogSound", "acceptTimer")]
+script = ExtResource("1_sht7a")
+dialog = NodePath("Dialog")
+speakDelay = NodePath("SpeakDelay")
+dialogSound = NodePath("DialogSound")
+acceptTimer = NodePath("AcceptTimer")
 
 [node name="BackGround" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_nhn04")
 
-[node name="TextEntry" type="Label" parent="."]
+[node name="Dialog" type="Label" parent="."]
 offset_left = -58.0
 offset_top = -29.0
 offset_right = 57.0
@@ -34,5 +38,5 @@ volume_db = -5.0
 wait_time = 0.5
 one_shot = true
 
-[connection signal="timeout" from="SpeakDelay" to="." method="_on_speak_delay_timeout"]
-[connection signal="timeout" from="AcceptTimer" to="." method="_on_accept_timer_timeout"]
+[connection signal="timeout" from="SpeakDelay" to="." method="OnSpeakDelayTimeout"]
+[connection signal="timeout" from="AcceptTimer" to="." method="OnAcceptTimerTimeout"]

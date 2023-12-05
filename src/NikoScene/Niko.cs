@@ -10,8 +10,7 @@ namespace OneInfection.Src.NikoScene
 
         public bool IsOutside { get; set; }
 
-        [Export]
-        public bool IsControlled { get; set; }
+        [Export] public bool IsControlled { get; set; }
 
         [Export]
         public bool IsBright
@@ -35,11 +34,8 @@ namespace OneInfection.Src.NikoScene
             }
         }
 
-        [Export]
-        private AnimationPlayer animationPlayer;
-
-        [Export]
-        private Sprite2D spriteSheet;
+        [Export] private AnimationPlayer animationPlayer;
+        [Export] private Sprite2D spriteSheet;
 
         private bool isBright;
 

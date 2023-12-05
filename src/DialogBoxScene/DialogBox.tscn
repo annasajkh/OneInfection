@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://do806tj6p8qkh"]
 
-[ext_resource type="Script" path="res://Src/DialogBoxScene/DialogBox.gd" id="1_xxaen"]
+[ext_resource type="Script" path="res://Src/DialogBoxScene/DialogBox.cs" id="1_htsid"]
 [ext_resource type="Texture2D" uid="uid://br2t1h5vl6fkm" path="res://assets/textures/dialog_box/dialog_box.png" id="2_q2vq2"]
-[ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/font/Terminus TTF Bold.ttf" id="3_hlb5a"]
+[ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/fonts/Terminus TTF Bold.ttf" id="3_hlb5a"]
 [ext_resource type="Texture2D" uid="uid://cmvai3ew4kxqo" path="res://assets/textures/faces/niko/niko2.png" id="3_pjm8a"]
 [ext_resource type="AudioStream" uid="uid://bfg53plxmr3e1" path="res://assets/sounds/normal_dialog.wav" id="5_bvocf"]
 [ext_resource type="Texture2D" uid="uid://cbjgst7kxuljh" path="res://assets/textures/dialog_box/continue_dialog_arrow.png" id="6_3o016"]
@@ -33,14 +33,21 @@ _data = {
 "up_and_down": SubResource("Animation_flbl1")
 }
 
-[node name="DialogBox" type="Control"]
+[node name="DialogBox" type="Control" node_paths=PackedStringArray("dialog", "speakDelay", "faceIcon", "dialogSound", "continueDialogArrow", "continueDialogArrowAnimation", "acceptTimer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xxaen")
+script = ExtResource("1_htsid")
+dialog = NodePath("Dialog")
+speakDelay = NodePath("SpeakDelay")
+faceIcon = NodePath("FaceIcon")
+dialogSound = NodePath("DialogSound")
+continueDialogArrow = NodePath("ContinueDialogArrow")
+continueDialogArrowAnimation = NodePath("ContinueDialogArrow/AnimationPlayer")
+acceptTimer = NodePath("AcceptTimer")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -59,7 +66,7 @@ offset_right = 304.0
 offset_bottom = 64.0
 texture = ExtResource("3_pjm8a")
 
-[node name="TextEntry" type="Label" parent="."]
+[node name="Dialog" type="Label" parent="."]
 layout_mode = 1
 offset_left = 16.0
 offset_top = 16.0
@@ -92,5 +99,5 @@ libraries = {
 wait_time = 0.5
 one_shot = true
 
-[connection signal="timeout" from="SpeakDelay" to="." method="_on_speak_delay_timeout"]
-[connection signal="timeout" from="AcceptTimer" to="." method="_on_accept_timer_timeout"]
+[connection signal="timeout" from="SpeakDelay" to="." method="OnSpeakDelayTimeout"]
+[connection signal="timeout" from="AcceptTimer" to="." method="OnAcceptTimerTimeout"]

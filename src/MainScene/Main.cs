@@ -1,5 +1,5 @@
 using Godot;
-using OneInfection.src.Utils;
+using OneInfection.Src.DialogBoxScene;
 using OneInfection.Src.NikoScene;
 using OneInfection.Src.NikoWindowScene;
 using OneInfection.Src.Utils;
@@ -9,26 +9,17 @@ namespace OneInfection.Src.MainScene
 {
     public partial class Main : Node2D
     {
+        [Export] private Node2D subWindows;
+        [Export] private Niko niko;
+        [Export] private NikoWindow nikoWindow;
+        [Export] private DialogBox dialogBox;
+        [Export] private AnimationPlayer animationPlayer;
+
         public bool IsMainWindowShaking { get; set; }
 
-        [Export]
-        private Node2D subWindows;
-
-        [Export]
-        private Niko niko;
-
-        [Export]
-        private NikoWindow nikoWindow;
-
-        [Export]
-        private Control dialogBox;
-
-        [Export]
-        private AnimationPlayer animationPlayer;
-
         private Window mainWindow;
-
         private Vector2I windowPosition;
+        private bool forceCenter = true;
 
         public override void _Ready()
         {
@@ -47,52 +38,52 @@ namespace OneInfection.Src.MainScene
             }
 
 
-            dialogBox.Call("play", DialogParser.Parse("assets/dialogs/Goodbye.json"));
-
-            dialogBox.Connect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
+            dialogBox.Play(DialogParser.Parse("assets/dialogs/Goodbye.json"));
+            dialogBox.ConversationFinished += GoodbyeConversation;
         }
 
-        private void GoodbyeDialogFinished()
+        private void GoodbyeConversation()
         {
+            dialogBox.ConversationFinished -= GoodbyeConversation;
+
             animationPlayer.Play("goodbye_niko");
-            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(GoodbyeDialogFinished)));
         }
 
         public void SomethingIsWrongWithTWM()
         {
-            dialogBox.Call("play", DialogParser.Parse("assets/dialogs/SomethingIsWrongWithTWM.json"));
+            dialogBox.Play(DialogParser.Parse("assets/dialogs/SomethingIsWrongWithTWM.json"));
 
-            dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
+            dialogBox.ConversationFinished += VirusInfectingTWM;
         }
 
         public void VirusInfectingTWM()
         {
-            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusInfectingTWM)));
+            dialogBox.ConversationFinished -= VirusInfectingTWM;
 
             IsMainWindowShaking = true;
 
-            dialogBox.Call("play", DialogParser.Parse("assets/dialogs/VirusInfectingTWM.json"));
+            dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusInfectingTWM.json"));
 
 
-            dialogBox.Connect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWM)));
+            dialogBox.ConversationFinished += VirusTakingOverTWM;
         }
 
         public void VirusTakingOverTWM()
         {
-            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(VirusTakingOverTWM)));
+            dialogBox.ConversationFinished -= VirusTakingOverTWM;
 
             IsMainWindowShaking = false;
 
             mainWindow.MoveToCenter();
 
-            dialogBox.Call("play", DialogParser.Parse("assets/dialogs/VirusTakingOverTWM.json"));
+            dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusTakingOverTWM.json"));
 
-            dialogBox.Connect("dialog_finished", new Callable(this, nameof(BattleStart)));
+            dialogBox.ConversationFinished += BattleStart;
         }
 
         private void BattleStart()
         {
-            dialogBox.Disconnect("dialog_finished", new Callable(this, nameof(BattleStart)));
+            dialogBox.ConversationFinished -= BattleStart;
 
             // here we starting our fight
 
@@ -121,6 +112,11 @@ namespace OneInfection.Src.MainScene
 
         public override void _Process(double delta)
         {
+            if (Input.IsKeyPressed(Key.P))
+            {
+                dialogBox.Call("skip", null);
+            }
+
             if (IsMainWindowShaking)
             {
                 mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
@@ -129,6 +125,10 @@ namespace OneInfection.Src.MainScene
                 {
                     mainWindow.MoveToCenter();
                 }
+            }
+            else if (forceCenter)
+            {
+                mainWindow.MoveToCenter();
             }
 
             if (niko.IsOutside)

@@ -1,25 +1,17 @@
 using Godot;
-using OneInfection.Src.NikoScene;
 
-
-namespace OneInfection.Src.NikoWindowScene
+namespace OneInfection.Src.VirusHands.VirusRightHand
 {
-
-    public partial class NikoWindow : Window
+    public partial class VirusRightHand : Window
     {
-        public bool IsOutside;
-
         [Export] private RemoteTransform2D positionToView;
 
         [Export] private Camera2D camera;
 
-        [Export] private Niko niko;
-
-
-        private float speed = 120;
         public override void _Ready()
         {
             positionToView.RemotePath = camera.GetPath();
+
         }
     }
 }
