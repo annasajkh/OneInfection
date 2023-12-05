@@ -1,8 +1,9 @@
 using Godot;
 using OneInfection.Src.Utils;
 using System.Collections.Generic;
+using OneInfection.Src.OutsideDialogBoxScene;
 
-namespace OneInfection.Src.OutsideDialogBoxScene
+namespace OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene
 {
     public partial class OutsideDialogBox : Node2D
     {

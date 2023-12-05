@@ -1,8 +1,8 @@
 using Godot;
-using OneInfection.Src.NikoScene;
+using OneInfection.Src.NikoScenes.NikoScene;
 
 
-namespace OneInfection.Src.NikoWindowScene
+namespace OneInfection.Src.NikoScenes.NikoWindowScene
 {
 
     public partial class NikoWindow : Window

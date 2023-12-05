@@ -171,5 +171,17 @@ namespace OneInfection.Src.NikoScene
 
             MoveAndSlide();
         }
+
+        #region Signal receivers
+
+        private void OnHitBoxAreaEntered(Area2D area)
+        {
+            if (area.IsInGroup("virus"))
+            {
+                GetTree().Quit();
+            }
+        }
+
+        #endregion
     }
 }

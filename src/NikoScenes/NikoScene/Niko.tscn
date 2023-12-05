@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://doicf1tsiunbq"]
+[gd_scene load_steps=15 format=3 uid="uid://doicf1tsiunbq"]
 
-[ext_resource type="Script" path="res://Src/NikoScene/Niko.cs" id="1_lgge0"]
+[ext_resource type="Script" path="res://Src/NikoScenes/NikoScene/Niko.cs" id="1_lgge0"]
 [ext_resource type="Texture2D" uid="uid://ycnuopexuryc" path="res://assets/textures/niko/niko_bright_sheet.png" id="2_6cuxk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kbqib"]
@@ -166,6 +166,9 @@ _data = {
 "walk_up": SubResource("Animation_svvi3")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8o306"]
+size = Vector2(16, 27)
+
 [node name="Niko" type="CharacterBody2D" node_paths=PackedStringArray("animationPlayer", "spriteSheet")]
 script = ExtResource("1_lgge0")
 animationPlayer = NodePath("AnimationPlayer")
@@ -184,3 +187,11 @@ shape = SubResource("RectangleShape2D_kbqib")
 libraries = {
 "": SubResource("AnimationLibrary_0rvls")
 }
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_8o306")
+
+[connection signal="area_entered" from="HitBox" to="." method="OnHitBoxAreaEntered"]

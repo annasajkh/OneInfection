@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bnfxb0c5xpqyv"]
 
-[ext_resource type="Script" path="res://Src/OutsideDialogBoxScene/OutsideDialogBox.cs" id="1_sht7a"]
+[ext_resource type="Script" path="res://Src/DialogBoxScenes/OutsideDialogBoxScene/OutsideDialogBox.cs" id="1_sht7a"]
 [ext_resource type="Texture2D" uid="uid://cmirw1ljmdkke" path="res://assets/textures/dialog_box/niko_outside_dialogbox.png" id="2_nhn04"]
 [ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/fonts/Terminus TTF Bold.ttf" id="3_okd37"]
 [ext_resource type="AudioStream" uid="uid://bfg53plxmr3e1" path="res://assets/sounds/normal_dialog.wav" id="4_hjwoj"]

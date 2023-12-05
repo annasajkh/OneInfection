@@ -85,6 +85,8 @@ namespace OneInfection.Src.MainScene
         {
             dialogBox.ConversationFinished -= BattleStart;
 
+
+
             // here we starting our fight
 
             niko.IsControlled = true;
@@ -112,9 +114,9 @@ namespace OneInfection.Src.MainScene
 
         public override void _Process(double delta)
         {
-            if (Input.IsKeyPressed(Key.P))
+            if (Input.IsActionJustPressed("skip"))
             {
-                dialogBox.Call("skip", null);
+                dialogBox.Skip();
             }
 
             if (IsMainWindowShaking)

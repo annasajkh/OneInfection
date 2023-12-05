@@ -3,9 +3,12 @@ using OneInfection.Src.NikoScene;
 using OneInfection.Src.OutsideDialogBoxScene;
 using OneInfection.Src.Utils;
 using System.Collections.Generic;
+using OneInfection.Src.DialogBoxScene;
+using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
+using OneInfection.Src.NikoScenes.NikoScene;
 
 
-namespace OneInfection.Src.DialogBoxScene
+namespace OneInfection.Src.DialogBoxScenes.DialogBoxScene
 {
     public partial class DialogBox : Control
     {
@@ -47,7 +50,13 @@ namespace OneInfection.Src.DialogBoxScene
             Visible = true;
             currentConversationIndex = 0;
             this.conversation = conversation;
+            SetNextDialogBox();
+        }
 
+        public void Skip()
+        {
+            currentConversationIndex = conversation.Count;
+            dialog.VisibleCharacters = dialog.Text.Length;
             SetNextDialogBox();
         }
 

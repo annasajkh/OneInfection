@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://Src/MainScene/Main.cs" id="1_dc7x5"]
 [ext_resource type="PackedScene" uid="uid://cc01bx6vo4ddt" path="res://Src/FirstHouseScene/FirstHouse.tscn" id="2_8n7n2"]
-[ext_resource type="PackedScene" uid="uid://doicf1tsiunbq" path="res://Src/NikoScene/Niko.tscn" id="3_tmrfw"]
-[ext_resource type="PackedScene" uid="uid://cgnp8tcmx4epg" path="res://Src/NikoWindowScene/NikoWindow.tscn" id="4_rkojq"]
-[ext_resource type="PackedScene" uid="uid://do806tj6p8qkh" path="res://Src/DialogBoxScene/DialogBox.tscn" id="5_iopbl"]
-[ext_resource type="PackedScene" uid="uid://bnfxb0c5xpqyv" path="res://Src/OutsideDialogBoxScene/OutsideDialogBox.tscn" id="5_qpoyb"]
+[ext_resource type="PackedScene" uid="uid://doicf1tsiunbq" path="res://Src/NikoScenes/NikoScene/Niko.tscn" id="3_tmrfw"]
+[ext_resource type="PackedScene" uid="uid://cgnp8tcmx4epg" path="res://Src/NikoScenes/NikoWindowScene/NikoWindow.tscn" id="4_rkojq"]
+[ext_resource type="PackedScene" uid="uid://do806tj6p8qkh" path="res://Src/DialogBoxScenes/DialogBoxScene/DialogBox.tscn" id="5_iopbl"]
+[ext_resource type="PackedScene" uid="uid://bnfxb0c5xpqyv" path="res://Src/DialogBoxScenes/OutsideDialogBoxScene/OutsideDialogBox.tscn" id="5_qpoyb"]
 
 [sub_resource type="Animation" id="Animation_w2gk2"]
 length = 0.001
