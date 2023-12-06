@@ -1,4 +1,5 @@
 using Godot;
+using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
 using OneInfection.Src.ViewWindowScene;
 
 namespace OneInfection.Src.NikoScenes.NikoScene;
@@ -13,6 +14,8 @@ public enum Direction
 
 public partial class Niko : CharacterBody2D
 {
+    [Export] private OutsideDialogBox outsideDialogBox;
+
     public Direction CurrentDirection { get; set; } = Direction.Down;
     public bool IsWalking { get; set; }
     public float Speed { get; set; } = 40;
@@ -181,16 +184,4 @@ public partial class Niko : CharacterBody2D
 
         MoveAndSlide();
     }
-
-    #region Signal receivers
-
-    private void OnHitBoxAreaEntered(Area2D area)
-    {
-        if (area.IsInGroup("virus"))
-        {
-            GetTree().Quit();
-        }
-    }
-
-    #endregion
 }

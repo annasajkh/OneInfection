@@ -1,4 +1,5 @@
 using Godot;
+using OneInfection.Src.Utils;
 using System;
 
 namespace OneInfection.Src.ViewWindowScene;
@@ -22,6 +23,7 @@ public partial class ViewWindow : Window
     public override void _Process(double delta)
     {
         camera.Position = positionToView.Position;
+        Position = Util.ToScreenPosition((Vector2I)positionToView.Position);
     }
 
 }

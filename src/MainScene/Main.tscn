@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cc01bx6vo4ddt" path="res://Src/FirstHouseScene/FirstHouse.tscn" id="2_8n7n2"]
 [ext_resource type="PackedScene" uid="uid://doicf1tsiunbq" path="res://Src/NikoScenes/NikoScene/Niko.tscn" id="3_tmrfw"]
 [ext_resource type="PackedScene" uid="uid://do806tj6p8qkh" path="res://Src/DialogBoxScenes/DialogBoxScene/DialogBox.tscn" id="5_iopbl"]
-[ext_resource type="PackedScene" uid="uid://bnfxb0c5xpqyv" path="res://Src/DialogBoxScenes/OutsideDialogBoxScene/OutsideDialogBox.tscn" id="5_qpoyb"]
+[ext_resource type="PackedScene" uid="uid://bnfxb0c5xpqyv" path="res://Src/DialogBoxScenes/OutsideDialogBoxScene/OutsideDialogBox.tscn" id="5_p21eh"]
 
 [sub_resource type="Animation" id="Animation_w2gk2"]
 length = 0.001
@@ -50,11 +50,13 @@ _data = {
 "goodbye_niko": SubResource("Animation_pfkmk")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileTimer")]
 script = ExtResource("1_dc7x5")
 niko = NodePath("Niko")
 dialogBox = NodePath("World/CanvasLayer/DialogBox")
 animationPlayer = NodePath("MainAnimation")
+world = NodePath("World")
+virusProjectileTimer = NodePath("VirusProjectileTimer")
 
 [node name="World" type="Node2D" parent="."]
 
@@ -71,9 +73,7 @@ niko = NodePath("../../../Niko")
 position = Vector2(165, 226)
 metadata/_edit_group_ = true
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Niko"]
-
-[node name="OutsideDialogBox" parent="Niko" instance=ExtResource("5_qpoyb")]
+[node name="OutsideDialogBox" parent="Niko" instance=ExtResource("5_p21eh")]
 visible = false
 position = Vector2(0, -49)
 
@@ -82,4 +82,8 @@ libraries = {
 "": SubResource("AnimationLibrary_4ngi3")
 }
 
+[node name="VirusProjectileTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
+[connection signal="timeout" from="VirusProjectileTimer" to="." method="OnVirusProjectileTimerTimeout"]

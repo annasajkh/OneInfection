@@ -19,7 +19,7 @@
 
   {
     "face": "virus/virus_83c",
-    "dialog": "so you call them \"The World Machine\" very interesting",
+    "dialog": "So you call them \"The World Machine\" very interesting",
     "delayToNext": 0.1
   },
 
@@ -37,13 +37,13 @@
 
   {
     "face": "virus/virus_83c",
-    "dialog": "so this is why you call them \"The World Machine\" because there is a little simulation in here",
+    "dialog": "So this is why you call them \"The World Machine\" because there is a little simulation in here",
     "delayToNext": 0.1
   },
 
   {
     "face": "niko/niko",
-    "dialog": "don't you dare do anything with the simulation",
+    "dialog": "Don't you dare do anything with the simulation",
     "delayToNext": 0.1
   },
 

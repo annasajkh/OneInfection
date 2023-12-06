@@ -1,7 +1,13 @@
-﻿[
+[
   {
-    "face": "virus/virus_83c",
-    "dialog": "Well hello there",
-    "delayToNext": 0.1
+	"face": "virus/virus2",
+	"dialog": "Huh i still don't know how to move this thing",
+	"delayToNext": 0.1
   },
+
+  {
+	"face": "virus/virus_83c",
+	"dialog": "Ohhhh this is fun",
+	"delayToNext": 0.1
+  }
 ]

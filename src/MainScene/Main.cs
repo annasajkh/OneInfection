@@ -1,6 +1,7 @@
 using Godot;
 using OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 using OneInfection.Src.NikoScenes.NikoScene;
+using OneInfection.Src.ProjectileScene;
 using OneInfection.Src.Utils;
 
 namespace OneInfection.Src.MainScene;
@@ -8,27 +9,30 @@ namespace OneInfection.Src.MainScene;
 
 public partial class Main : Node2D
 {
-    [Export] private Node subWindows;
-
     [Export] private Niko niko;
-
     [Export] private DialogBox dialogBox;
     [Export] private AnimationPlayer animationPlayer;
-
-    [Export] private Marker2D virusRightHandTarget;
-    [Export] private Marker2D virusLeftHandTarget;
+    [Export] private Node2D world;
+    [Export] private Timer virusProjectileTimer;
 
     public bool IsMainWindowShaking { get; set; }
 
     private Window mainWindow;
-    private Vector2I windowPosition;
+    private PackedScene virusProjectileScene;
     private bool forceCenter = true;
 
     public override void _Ready()
     {
+        virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScene/ProjectileScene/Projectile.tscn");
+
         mainWindow = GetWindow();
 
+        PlayMainDialogChain();
+    }
 
+    #region Main dialog chain
+    public void PlayMainDialogChain()
+    {
         dialogBox.Play(DialogParser.Parse("assets/dialogs/Goodbye.json"));
         dialogBox.ConversationFinished += GoodbyeConversation;
     }
@@ -72,25 +76,37 @@ public partial class Main : Node2D
         mainWindow.MoveToCenter();
 
         dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusTakingOverTWM.json"));
-
         dialogBox.ConversationFinished += BattleStart;
     }
 
     private void BattleStart()
     {
+        virusProjectileTimer.Start();
+
         dialogBox.ConversationFinished -= BattleStart;
+        dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusRamblingAtBattle.json"));
 
         niko.IsControlled = true;
+    }
+    #endregion
 
+    public void SpawnVirusProjectile()
+    {
+        Projectile projectile = virusProjectileScene.Instantiate<Projectile>();
 
+        projectile.Init(position: Util.ToWorldPosition(mainWindow.Position / 2 + mainWindow.Size / 2),
+                        direction: Vector2.Right.Rotated((float)GD.RandRange(0.0, Mathf.Tau)),
+                        speed: 500);
+
+        world.AddChild(projectile);
     }
 
     private void OnFirstHouseGoOutside()
     {
         niko.Speed *= 2;
 
-        Vector2I initialWindowPosition = DisplayServer.WindowGetPosition();
-        Vector2I initialWindowSize = DisplayServer.WindowGetSize();
+        Vector2I initialWindowPosition = mainWindow.Position;
+        Vector2I initialWindowSize = mainWindow.Size;
 
         Vector2I nikoWindowOffset = initialWindowPosition;
 
@@ -102,6 +118,11 @@ public partial class Main : Node2D
         niko.IsOutside = true;
 
         niko.Position = Util.ToWorldPosition(nikoWindowOffset);
+    }
+
+    private void OnVirusProjectileTimerTimeout()
+    {
+        SpawnVirusProjectile();
     }
 
     public override void _Process(double delta)
