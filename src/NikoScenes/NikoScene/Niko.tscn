@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://doicf1tsiunbq"]
+[gd_scene load_steps=16 format=3 uid="uid://doicf1tsiunbq"]
 
 [ext_resource type="Script" path="res://Src/NikoScenes/NikoScene/Niko.cs" id="1_lgge0"]
 [ext_resource type="Texture2D" uid="uid://ycnuopexuryc" path="res://assets/textures/niko/niko_bright_sheet.png" id="2_6cuxk"]
+[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="3_bdm62"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kbqib"]
 size = Vector2(12, 4)
@@ -169,10 +170,11 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8o306"]
 size = Vector2(16, 27)
 
-[node name="Niko" type="CharacterBody2D" node_paths=PackedStringArray("animationPlayer", "spriteSheet")]
+[node name="Niko" type="CharacterBody2D" node_paths=PackedStringArray("animationPlayer", "spriteSheet", "window")]
 script = ExtResource("1_lgge0")
 animationPlayer = NodePath("AnimationPlayer")
 spriteSheet = NodePath("SpriteSheet")
+window = NodePath("ViewWindow")
 
 [node name="SpriteSheet" type="Sprite2D" parent="."]
 texture = ExtResource("2_6cuxk")
@@ -193,5 +195,13 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_8o306")
+
+[node name="ViewWindow" parent="." node_paths=PackedStringArray("positionToView") instance=ExtResource("3_bdm62")]
+transparent_bg = true
+size = Vector2i(384, 384)
+visible = false
+borderless = true
+transparent = true
+positionToView = NodePath("..")
 
 [connection signal="area_entered" from="HitBox" to="." method="OnHitBoxAreaEntered"]

@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxt24a8odprx1"]
+[gd_scene load_steps=4 format=3 uid="uid://cxt24a8odprx1"]
 
 [ext_resource type="Script" path="res://Src/VirusHandScenes/VirusRightHandScene/VirusRightHand.cs" id="1_imvn5"]
-[ext_resource type="Texture2D" uid="uid://dim2qeafrycdl" path="res://assets/textures/virus/virus_hand_left_idle.png" id="2_eg4po"]
+[ext_resource type="Texture2D" uid="uid://btjvjc0lv2teb" path="res://assets/textures/virus/virus_hand_right_idle.png" id="2_ti3sm"]
+[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="3_mjhuw"]
 
 [node name="VirusRightHand" type="Node2D"]
 script = ExtResource("1_imvn5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_eg4po")
+position = Vector2(0, 1)
+texture = ExtResource("2_ti3sm")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
+[node name="ViewWindow" parent="." instance=ExtResource("3_mjhuw")]

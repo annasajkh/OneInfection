@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwkk26fkavnof"]
+
+[ext_resource type="Texture2D" uid="uid://bkh86ambm4eon" path="res://assets/textures/virus/virus_projectile.png" id="1_et8fp"]
+[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="2_rta5l"]
+
+[node name="Projectile" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_et8fp")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
+[node name="ViewWindow" parent="." instance=ExtResource("2_rta5l")]
+script = null
