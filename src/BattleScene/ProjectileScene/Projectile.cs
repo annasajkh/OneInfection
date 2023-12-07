@@ -7,6 +7,13 @@ namespace OneInfection.Src.ProjectileScene;
 public partial class Projectile : Area2D
 {
     [Export] private ViewWindow window;
+    public Window Window
+    {
+        get
+        {
+            return window;
+        }
+    }
 
     public float Speed { get; set; }
     public Vector2 Direction { get; set; }

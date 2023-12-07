@@ -8,9 +8,10 @@ position = Vector2i(0, 36)
 size = Vector2i(256, 256)
 visible = false
 always_on_top = true
+content_scale_mode = 1
+content_scale_aspect = 1
 script = ExtResource("1_7bhyg")
 camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 texture_filter = 1
-zoom = Vector2(2, 2)

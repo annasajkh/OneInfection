@@ -17,13 +17,12 @@ public partial class ViewWindow : Window
         {
             throw new Exception("Please set the position for this window to view in the godot editor");
         }
-
     }
 
     public override void _Process(double delta)
     {
         camera.Position = positionToView.Position;
-        Position = Util.ToScreenPosition((Vector2I)positionToView.Position);
+        Position = Util.ToScreenWindowCenteredPosition(this, (Vector2I)positionToView.Position);
     }
 
 }

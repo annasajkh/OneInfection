@@ -65,17 +65,15 @@ virusProjectileTimer = NodePath("VirusProjectileTimer")
 [node name="CanvasLayer" type="CanvasLayer" parent="World"]
 
 [node name="DialogBox" parent="World/CanvasLayer" node_paths=PackedStringArray("outsideDialogBox", "niko") instance=ExtResource("5_iopbl")]
-visible = false
 outsideDialogBox = NodePath("../../../Niko/OutsideDialogBox")
 niko = NodePath("../../../Niko")
 
 [node name="Niko" parent="." instance=ExtResource("3_tmrfw")]
-position = Vector2(165, 226)
+position = Vector2(330, 452)
 metadata/_edit_group_ = true
 
 [node name="OutsideDialogBox" parent="Niko" instance=ExtResource("5_p21eh")]
-visible = false
-position = Vector2(0, -49)
+position = Vector2(0, -104)
 
 [node name="MainAnimation" type="AnimationPlayer" parent="."]
 libraries = {

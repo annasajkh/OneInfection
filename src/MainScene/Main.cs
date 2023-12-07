@@ -81,7 +81,8 @@ public partial class Main : Node2D
 
     private void BattleStart()
     {
-        virusProjectileTimer.Start();
+        SpawnVirusProjectile();
+        //virusProjectileTimer.Start();
 
         dialogBox.ConversationFinished -= BattleStart;
         dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusRamblingAtBattle.json"));
@@ -94,9 +95,9 @@ public partial class Main : Node2D
     {
         Projectile projectile = virusProjectileScene.Instantiate<Projectile>();
 
-        projectile.Init(position: Util.ToWorldPosition(mainWindow.Position / 2 + mainWindow.Size / 2),
+        projectile.Init(position: Util.ToWorldPositionFromScreenWindowCenteredPosition(projectile.Window, DisplayServer.ScreenGetSize() / 2),
                         direction: Vector2.Right.Rotated((float)GD.RandRange(0.0, Mathf.Tau)),
-                        speed: 500);
+                        speed: 10);
 
         world.AddChild(projectile);
     }
@@ -117,7 +118,7 @@ public partial class Main : Node2D
         niko.Window.Visible = true;
         niko.IsOutside = true;
 
-        niko.Position = Util.ToWorldPosition(nikoWindowOffset);
+        niko.Position = Util.ToWorldPositionFromScreenWindowCenteredPosition(niko.Window, nikoWindowOffset);
     }
 
     private void OnVirusProjectileTimerTimeout()
@@ -144,11 +145,6 @@ public partial class Main : Node2D
         else if (forceCenter)
         {
             mainWindow.MoveToCenter();
-        }
-
-        if (niko.IsOutside)
-        {
-            niko.Window.Position = Util.ToScreenPosition((Vector2I)niko.Position);
         }
     }
 }

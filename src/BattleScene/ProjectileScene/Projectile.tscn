@@ -5,13 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="2_rta5l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_om515"]
-radius = 25.0
+radius = 48.0
 
 [node name="Area2D" type="Area2D" node_paths=PackedStringArray("window")]
 script = ExtResource("1_jakqv")
 window = NodePath("ViewWindow")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("1_et8fp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

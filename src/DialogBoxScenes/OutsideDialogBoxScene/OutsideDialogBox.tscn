@@ -7,7 +7,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_1npdf"]
 font = ExtResource("3_okd37")
-font_size = 9
 
 [node name="OutsideDialogBox" type="Node2D" node_paths=PackedStringArray("dialog", "speakDelay", "dialogSound", "acceptTimer")]
 script = ExtResource("1_sht7a")
@@ -17,14 +16,13 @@ dialogSound = NodePath("DialogSound")
 acceptTimer = NodePath("AcceptTimer")
 
 [node name="BackGround" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_nhn04")
 
 [node name="Dialog" type="Label" parent="."]
-offset_left = -58.0
-offset_top = -29.0
-offset_right = 57.0
-offset_bottom = 21.0
+offset_left = -112.0
+offset_top = -56.0
+offset_right = 112.0
+offset_bottom = 40.0
 label_settings = SubResource("LabelSettings_1npdf")
 autowrap_mode = 3
 

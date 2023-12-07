@@ -177,12 +177,14 @@ spriteSheet = NodePath("SpriteSheet")
 window = NodePath("ViewWindow")
 
 [node name="SpriteSheet" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("2_6cuxk")
 hframes = 4
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 12)
+position = Vector2(0, 24)
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_kbqib")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -191,6 +193,7 @@ libraries = {
 }
 
 [node name="HitBox" type="Area2D" parent="."]
+scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, 0.5)
@@ -200,6 +203,7 @@ shape = SubResource("RectangleShape2D_8o306")
 transparent_bg = true
 size = Vector2i(384, 384)
 borderless = true
+always_on_top = false
 transparent = true
 positionToView = NodePath("..")
 

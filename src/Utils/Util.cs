@@ -17,13 +17,13 @@ public static class Util
                window.Position.Y + window.Size.Y < 0;
     }
 
-    public static Vector2I ToWorldPosition(Vector2I screenPosition)
+    public static Vector2I ToWorldPositionFromScreenWindowCenteredPosition(Window window, Vector2I screenPosition)
     {
-        return screenPosition + Global.WorldOutsideOffset;
+        return screenPosition + Global.WorldOutsideOffset + window.Size / 2;
     }
 
-    public static Vector2I ToScreenPosition(Vector2I worldPosition)
+    public static Vector2I ToScreenWindowCenteredPosition(Window window, Vector2I worldPosition)
     {
-        return worldPosition - Global.WorldOutsideOffset;
+        return worldPosition - Global.WorldOutsideOffset - window.Size / 2;
     }
 }
