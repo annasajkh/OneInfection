@@ -1,5 +1,5 @@
 using Godot;
-using OneInfection.Src.Utils;
+using OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 using System.Collections.Generic;
 
 namespace OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
@@ -13,12 +13,14 @@ public partial class OutsideDialogBox : Node2D
     [Export] private AudioStreamPlayer dialogSound;
     [Export] private Timer acceptTimer;
 
+
     [Signal] public delegate void ConversationFinishedEventHandler();
 
     private float charPerSeconds = 60;
     private int currentConversationIndex;
     private bool conversationFinished;
     private bool dialogPaused;
+    private bool isAutoPlay;
 
     private List<DialogItem> conversation;
 
@@ -28,11 +30,13 @@ public partial class OutsideDialogBox : Node2D
         dialogSound.Stream = GD.Load<AudioStream>("res://assets/sounds/normal_dialog.wav");
     }
 
-    public void Play(List<DialogItem> conversation)
+    public void Play(List<DialogItem> conversation, bool isAutoPlay = false)
     {
-        Visible = true;
-        currentConversationIndex = 0;
+        this.isAutoPlay = isAutoPlay;
         this.conversation = conversation;
+
+        currentConversationIndex = 0;
+        Visible = true;
 
         SetNextDialogBox();
     }
@@ -63,13 +67,13 @@ public partial class OutsideDialogBox : Node2D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("ui_accept") && conversationFinished)
+        if (Input.IsActionJustPressed("ui_accept") && conversationFinished && !isAutoPlay)
         {
             SetNextDialogBox();
             conversationFinished = false;
         }
 
-        if (Input.IsActionJustPressed("ui_accept") && dialogPaused)
+        if (Input.IsActionJustPressed("ui_accept") && dialogPaused && !isAutoPlay)
         {
             speakDelay.Start();
             dialogPaused = false;
@@ -97,6 +101,12 @@ public partial class OutsideDialogBox : Node2D
     private void OnAcceptTimerTimeout()
     {
         conversationFinished = true;
+
+        if (isAutoPlay)
+        {
+            SetNextDialogBox();
+            conversationFinished = false;
+        }
     }
     #endregion
 }

@@ -4,9 +4,11 @@ using OneInfection.Src.ViewWindowScene;
 
 namespace OneInfection.Src.ProjectileScene;
 
-public partial class Projectile : Area2D
+public partial class VirusProjectile : Area2D
 {
     [Export] private ViewWindow window;
+    [Export] private AnimationPlayer animationPlayer;
+
     public Window Window
     {
         get
@@ -15,21 +17,26 @@ public partial class Projectile : Area2D
         }
     }
 
-    public float Speed { get; set; }
+    public float Speed { get; set; } = 200;
     public Vector2 Direction { get; set; }
 
+    private bool shaking;
 
-    public void Init(Vector2 position, Vector2 direction, float speed)
+    public void Init(Vector2 position, Vector2 direction)
     {
         Position = position;
         Direction = direction;
-        Speed = speed;
 
         window.Visible = true;
     }
 
     public override void _Process(double delta)
     {
+        if (shaking)
+        {
+            Position += new Vector2I(GD.RandRange(-10, 10), GD.RandRange(-10, 10));
+        }
+
         if (Util.IsWindowOutsideOfTheScreen(window))
         {
             QueueFree();
@@ -39,5 +46,11 @@ public partial class Projectile : Area2D
     public override void _PhysicsProcess(double delta)
     {
         Position += Direction * Speed * (float)delta;
+    }
+
+    private void OnViewWindowCloseRequested()
+    {
+        shaking = true;
+        animationPlayer.Play("window_destroyed");
     }
 }

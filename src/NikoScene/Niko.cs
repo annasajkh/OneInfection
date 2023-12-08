@@ -18,7 +18,7 @@ public partial class Niko : CharacterBody2D
 
     public Direction CurrentDirection { get; set; } = Direction.Down;
     public bool IsWalking { get; set; }
-    public float Speed { get; set; } = 40;
+    public float Speed { get; set; } = 100;
 
     public bool IsOutside { get; set; }
 
@@ -183,5 +183,13 @@ public partial class Niko : CharacterBody2D
         Act();
 
         MoveAndSlide();
+    }
+
+    private void OnHitBoxAreaEntered(Area2D area)
+    {
+        if (area.IsInGroup("virus"))
+        {
+            GetTree().Quit();
+        }
     }
 }

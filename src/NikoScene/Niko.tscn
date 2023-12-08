@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://doicf1tsiunbq"]
 
-[ext_resource type="Script" path="res://Src/NikoScenes/NikoScene/Niko.cs" id="1_lgge0"]
+[ext_resource type="Script" path="res://Src/NikoScene/Niko.cs" id="1_lgge0"]
 [ext_resource type="Texture2D" uid="uid://ycnuopexuryc" path="res://assets/textures/niko/niko_bright_sheet.png" id="2_6cuxk"]
 [ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="3_bdm62"]
 
@@ -203,7 +203,6 @@ shape = SubResource("RectangleShape2D_8o306")
 transparent_bg = true
 size = Vector2i(384, 384)
 borderless = true
-always_on_top = false
 transparent = true
 positionToView = NodePath("..")
 

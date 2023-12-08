@@ -1,11 +1,18 @@
 using Godot;
+using Newtonsoft.Json;
 using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
 using OneInfection.Src.NikoScenes.NikoScene;
-using OneInfection.Src.Utils;
 using System.Collections.Generic;
+using System.IO;
 
 namespace OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 
+public struct DialogItem
+{
+    public string face;
+    public string dialog;
+    public float delayToNext;
+}
 
 public partial class DialogBox : Control
 {
@@ -26,6 +33,7 @@ public partial class DialogBox : Control
     private int currentConversationIndex;
     private bool conversationFinished;
     private bool dialogPaused;
+    private bool isAutoPlay;
 
     private List<DialogItem> conversation;
 
@@ -42,11 +50,14 @@ public partial class DialogBox : Control
 
         outsideDialogBox.ConversationFinished += NikoDialogFinished;
     }
-    public void Play(List<DialogItem> conversation)
+    public void Play(string conversationName, bool isAutoPlay = false)
     {
+        this.isAutoPlay = isAutoPlay;
+
         Visible = true;
         currentConversationIndex = 0;
-        this.conversation = conversation;
+        conversation = JsonConvert.DeserializeObject<List<DialogItem>>(File.ReadAllText($"assets/dialogs/{conversationName}.json"));
+
         SetNextDialogBox();
     }
 
@@ -72,7 +83,7 @@ public partial class DialogBox : Control
 
         if (characterName == "niko" && niko.IsOutside)
         {
-            outsideDialogBox.Play(new List<DialogItem>() { conversation[currentConversationIndex] });
+            outsideDialogBox.Play(new List<DialogItem>() { conversation[currentConversationIndex] }, isAutoPlay);
             currentConversationIndex++;
 
             return;
@@ -106,24 +117,31 @@ public partial class DialogBox : Control
 
     public override void _Process(double delta)
     {
-        if (conversationFinished)
+        if (!isAutoPlay)
         {
-            continueDialogArrow.Visible = true;
-            continueDialogArrowAnimation.Play("up_and_down");
+            if (conversationFinished)
+            {
+                continueDialogArrow.Visible = true;
+                continueDialogArrowAnimation.Play("up_and_down");
+            }
+            else
+            {
+                continueDialogArrow.Visible = false;
+                continueDialogArrowAnimation.Stop();
+            }
         }
         else
         {
             continueDialogArrow.Visible = false;
-            continueDialogArrowAnimation.Stop();
         }
 
-        if (Input.IsActionJustPressed("ui_accept") && conversationFinished)
+        if (Input.IsActionJustPressed("ui_accept") && conversationFinished && !isAutoPlay)
         {
             SetNextDialogBox();
             conversationFinished = false;
         }
 
-        if (Input.IsActionJustPressed("ui_accept") && dialogPaused)
+        if (Input.IsActionJustPressed("ui_accept") && dialogPaused && !isAutoPlay)
         {
             speakDelay.Start();
             dialogPaused = false;
@@ -156,6 +174,12 @@ public partial class DialogBox : Control
     private void OnAcceptTimerTimeout()
     {
         conversationFinished = true;
+
+        if (isAutoPlay)
+        {
+            SetNextDialogBox();
+            conversationFinished = false;
+        }
     }
 
     #endregion

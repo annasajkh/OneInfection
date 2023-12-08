@@ -4,6 +4,7 @@ using OneInfection.Src.NikoScenes.NikoScene;
 using OneInfection.Src.ProjectileScene;
 using OneInfection.Src.Utils;
 
+
 namespace OneInfection.Src.MainScene;
 
 
@@ -13,7 +14,6 @@ public partial class Main : Node2D
     [Export] private DialogBox dialogBox;
     [Export] private AnimationPlayer animationPlayer;
     [Export] private Node2D world;
-    [Export] private Timer virusProjectileTimer;
 
     public bool IsMainWindowShaking { get; set; }
 
@@ -23,7 +23,7 @@ public partial class Main : Node2D
 
     public override void _Ready()
     {
-        virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScene/ProjectileScene/Projectile.tscn");
+        virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusProjectileScene/VirusProjectile.tscn");
 
         mainWindow = GetWindow();
 
@@ -33,7 +33,7 @@ public partial class Main : Node2D
     #region Main dialog chain
     public void PlayMainDialogChain()
     {
-        dialogBox.Play(DialogParser.Parse("assets/dialogs/Goodbye.json"));
+        dialogBox.Play("goodbye");
         dialogBox.ConversationFinished += GoodbyeConversation;
     }
 
@@ -46,7 +46,7 @@ public partial class Main : Node2D
 
     public void SomethingIsWrongWithTWM()
     {
-        dialogBox.Play(DialogParser.Parse("assets/dialogs/SomethingIsWrongWithTWM.json"));
+        dialogBox.Play("something_is_wrong_with_TWM");
 
         dialogBox.ConversationFinished += VirusInfectingTWM;
     }
@@ -57,7 +57,7 @@ public partial class Main : Node2D
 
         IsMainWindowShaking = true;
 
-        dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusInfectingTWM.json"));
+        dialogBox.Play("virus_infecting_TWM");
 
 
         dialogBox.ConversationFinished += VirusTakingOverTWM;
@@ -69,43 +69,54 @@ public partial class Main : Node2D
 
         IsMainWindowShaking = false;
 
+        world.Modulate = new Color(1, 0, 0);
         mainWindow.Title = "OneInfection";
+
         DisplayServer.SetIcon(Image.LoadFromFile("res://icon_infected.png"));
 
 
         mainWindow.MoveToCenter();
 
-        dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusTakingOverTWM.json"));
+        dialogBox.Play("virus_taking_over_TWM");
+
         dialogBox.ConversationFinished += BattleStart;
     }
 
     private void BattleStart()
     {
-        SpawnVirusProjectile();
-        //virusProjectileTimer.Start();
-
         dialogBox.ConversationFinished -= BattleStart;
-        dialogBox.Play(DialogParser.Parse("assets/dialogs/VirusRamblingAtBattle.json"));
+
+        dialogBox.Play("battle_start");
 
         niko.IsControlled = true;
+
+        dialogBox.ConversationFinished += VirusProjectileAttack;
     }
+
+    private void VirusProjectileAttack()
+    {
+        dialogBox.ConversationFinished -= VirusProjectileAttack;
+
+        SpawnVirusProjectile();
+        animationPlayer.Play("virus_projectile_attack");
+    }
+
     #endregion
 
     public void SpawnVirusProjectile()
     {
-        Projectile projectile = virusProjectileScene.Instantiate<Projectile>();
+        VirusProjectile virusProjectile = virusProjectileScene.Instantiate<VirusProjectile>();
 
-        projectile.Init(position: Util.ToWorldPositionFromScreenWindowCenteredPosition(projectile.Window, DisplayServer.ScreenGetSize() / 2),
-                        direction: Vector2.Right.Rotated((float)GD.RandRange(0.0, Mathf.Tau)),
-                        speed: 10);
+        Vector2 projectilePosition = Util.ToWorldPositionFromScreenWindowCenteredPosition(virusProjectile.Window, DisplayServer.ScreenGetSize() / 2);
 
-        world.AddChild(projectile);
+
+        virusProjectile.Init(projectilePosition, (niko.Position - projectilePosition).Normalized());
+
+        world.AddChild(virusProjectile);
     }
 
     private void OnFirstHouseGoOutside()
     {
-        niko.Speed *= 2;
-
         Vector2I initialWindowPosition = mainWindow.Position;
         Vector2I initialWindowSize = mainWindow.Size;
 

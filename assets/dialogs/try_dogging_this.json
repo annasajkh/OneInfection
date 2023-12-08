@@ -1,0 +1,19 @@
+﻿[
+	{
+		"face": "virus/virus_83c",
+		"dialog": "Try to dodge this!",
+		"delayToNext": 3
+	},
+
+	{
+		"face": "virus/virus_smile",
+		"dialog": "Isn't this fun?",
+		"delayToNext": 3
+	},
+
+	{
+		"face": "virus/virus_83c",
+		"dialog": "It's so much fun!!!",
+		"delayToNext": 5
+	}
+]
