@@ -2,12 +2,13 @@ using Godot;
 using Newtonsoft.Json;
 using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
 using OneInfection.Src.NikoScenes.NikoScene;
+using OneInfection.Src.Utils;
 using System.Collections.Generic;
 using System.IO;
 
 namespace OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 
-public struct DialogItem
+public class DialogItem
 {
     public string face;
     public string dialog;
@@ -78,6 +79,8 @@ public partial class DialogBox : Control
 
             return;
         }
+
+        conversation[currentConversationIndex].dialog = conversation[currentConversationIndex].dialog.Replace("%playerName%", Global.playerName);
 
         string characterName = conversation[currentConversationIndex].face.Split("/")[0];
 

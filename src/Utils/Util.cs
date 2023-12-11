@@ -7,22 +7,22 @@ namespace OneInfection.Src.Utils;
 
 public static class Util
 {
-    public static Vector2I ScreenSize { get; } = DisplayServer.ScreenGetSize();
-
     public static bool IsWindowOutsideOfTheScreen(Window window)
     {
-        return window.Position.X - window.Size.X > ScreenSize.X ||
+        Vector2I screenSize = DisplayServer.ScreenGetSize();
+
+        return window.Position.X - window.Size.X > screenSize.X ||
                window.Position.X + window.Size.X < 0 ||
-               window.Position.Y - window.Size.Y > ScreenSize.Y ||
+               window.Position.Y - window.Size.Y > screenSize.Y ||
                window.Position.Y + window.Size.Y < 0;
     }
 
-    public static Vector2I ToWorldPositionFromScreenWindowCenteredPosition(Window window, Vector2I screenPosition)
+    public static Vector2I ToWorldPosition(Window window, Vector2I screenPosition)
     {
         return screenPosition + Global.WorldOutsideOffset + window.Size / 2;
     }
 
-    public static Vector2I ToScreenWindowCenteredPosition(Window window, Vector2I worldPosition)
+    public static Vector2I ToScreenPosition(Window window, Vector2I worldPosition)
     {
         return worldPosition - Global.WorldOutsideOffset - window.Size / 2;
     }

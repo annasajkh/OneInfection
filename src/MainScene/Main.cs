@@ -1,7 +1,6 @@
 using Godot;
 using OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 using OneInfection.Src.NikoScenes.NikoScene;
-using OneInfection.Src.ProjectileScene;
 using OneInfection.Src.Utils;
 
 
@@ -14,18 +13,23 @@ public partial class Main : Node2D
     [Export] private DialogBox dialogBox;
     [Export] private AnimationPlayer animationPlayer;
     [Export] private Node2D world;
+    [Export] private Node2D virusProjectileParent;
+    [Export] private Node2D virusCannonParent;
 
     public bool IsMainWindowShaking { get; set; }
 
+    private PackedScene virusCannonScene;
     private Window mainWindow;
-    private PackedScene virusProjectileScene;
     private bool forceCenter = true;
+
+    private VirusCannon virusCannon;
 
     public override void _Ready()
     {
-        virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusProjectileScene/VirusProjectile.tscn");
+        virusCannonScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusCannonScene/VirusCannon.tscn");
 
         mainWindow = GetWindow();
+        mainWindow.Title = "Oneshot";
 
         PlayMainDialogChain();
     }
@@ -87,33 +91,45 @@ public partial class Main : Node2D
         dialogBox.ConversationFinished -= BattleStart;
 
         dialogBox.Play("battle_start");
-
         niko.IsControlled = true;
 
-        dialogBox.ConversationFinished += VirusProjectileAttack;
+        dialogBox.ConversationFinished += Phase1Warmup;
     }
 
-    private void VirusProjectileAttack()
+    private void Phase1Warmup()
     {
-        dialogBox.ConversationFinished -= VirusProjectileAttack;
+        dialogBox.ConversationFinished -= Phase1Warmup;
 
-        SpawnVirusProjectile();
-        animationPlayer.Play("virus_projectile_attack");
+        dialogBox.Play("phase_1_warmup", isAutoPlay: true);
+
+        var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
+
+        virusCannon.Init(Util.ToWorldPosition(virusCannon.Window, new Vector2I(DisplayServer.ScreenGetSize().X / 2 - virusCannon.Window.Size.X / 2, 32)), niko, virusProjectileParent);
+
+        virusCannonParent.AddChild(virusCannon);
+
+        this.virusCannon = virusCannon;
+
+        dialogBox.ConversationFinished += Phase1;
+    }
+
+    private void Phase1()
+    {
+        dialogBox.ConversationFinished -= Phase1;
+
+        virusCannon.VirusProjectileTimer.WaitTime = 0.5f;
+
+        virusCannon.Destroyed += Phase1End;
+
+        dialogBox.Play("phase_1", isAutoPlay: true);
+    }
+
+    private void Phase1End()
+    {
+        dialogBox.Play("phase_1_end");
     }
 
     #endregion
-
-    public void SpawnVirusProjectile()
-    {
-        VirusProjectile virusProjectile = virusProjectileScene.Instantiate<VirusProjectile>();
-
-        Vector2 projectilePosition = Util.ToWorldPositionFromScreenWindowCenteredPosition(virusProjectile.Window, DisplayServer.ScreenGetSize() / 2);
-
-
-        virusProjectile.Init(projectilePosition, (niko.Position - projectilePosition).Normalized());
-
-        world.AddChild(virusProjectile);
-    }
 
     private void OnFirstHouseGoOutside()
     {
@@ -129,12 +145,7 @@ public partial class Main : Node2D
         niko.Window.Visible = true;
         niko.IsOutside = true;
 
-        niko.Position = Util.ToWorldPositionFromScreenWindowCenteredPosition(niko.Window, nikoWindowOffset);
-    }
-
-    private void OnVirusProjectileTimerTimeout()
-    {
-        SpawnVirusProjectile();
+        niko.Position = Util.ToWorldPosition(niko.Window, nikoWindowOffset);
     }
 
     public override void _Process(double delta)

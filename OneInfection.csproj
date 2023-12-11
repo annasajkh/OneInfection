@@ -4,9 +4,10 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Content Include="assets\dialogs\phase_1.json" />
+    <Content Include="assets\dialogs\phase_1_end.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="assets\dialogs\" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>

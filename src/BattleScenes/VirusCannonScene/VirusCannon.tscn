@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://uk1lbqcbec2a"]
+
+[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="1_5ujly"]
+[ext_resource type="Script" path="res://Src/BattleScenes/VirusCannonScene/VirusCannon.cs" id="1_vk5wk"]
+[ext_resource type="Texture2D" uid="uid://db5qdc51in3i2" path="res://assets/textures/virus/virus_cannon.png" id="2_rf2yl"]
+
+[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("virusProjectileTimer", "window")]
+script = ExtResource("1_vk5wk")
+virusProjectileTimer = NodePath("VirusProjectileTimer")
+window = NodePath("ViewWindow")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_rf2yl")
+
+[node name="ViewWindow" parent="." node_paths=PackedStringArray("positionToView") instance=ExtResource("1_5ujly")]
+transparent_bg = true
+size = Vector2i(320, 320)
+visible = true
+transparent = true
+positionToView = NodePath("..")
+canBeClosed = true
+
+[node name="VirusProjectileTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="VirusProjectileTimer" to="." method="OnVirusProjectileTimerTimeout"]
