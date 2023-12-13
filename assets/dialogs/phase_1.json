@@ -1,7 +1,7 @@
 [
 	{
 		"face": "virus/virus_smile",
-		"dialog": "How about we make it fire faster",
-		"delayToNext": 3
+		"dialog": "How about we make it faster?",
+		"delayToNext": 1000
 	}
 ]

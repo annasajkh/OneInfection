@@ -4,9 +4,9 @@ using OneInfection.Src.ViewWindowScene;
 
 public partial class VirusCannon : Node2D
 {
-    [Signal] public delegate void DestroyedEventHandler();
-
+    [Export] private Node2D cannonPivot;
     [Export] private Timer virusProjectileTimer;
+    [Export] private AnimationPlayer animationPlayer;
 
     public Timer VirusProjectileTimer
     {
@@ -25,11 +25,10 @@ public partial class VirusCannon : Node2D
             return window;
         }
     }
+    public float VirusProjectileSpeed { get; set; } = 500;
 
     public Node2D Target { get; private set; }
     public Node2D VirusProjectileParent { get; private set; }
-
-    private float virusProjectileSpeed = 500;
 
     private PackedScene virusProjectileScene;
 
@@ -38,24 +37,22 @@ public partial class VirusCannon : Node2D
         Position = position;
         Target = target;
         VirusProjectileParent = virusProjectileParent;
-
-        Window.WindowDestroyed += () =>
-        {
-            EmitSignal(SignalName.Destroyed);
-        };
     }
 
     public override void _Ready()
     {
+        Window.Visible = true;
+
         virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusProjectileScene/VirusProjectile.tscn");
-        Fire();
+
+        animationPlayer.Play("fire");
     }
 
     public override void _Process(double delta)
     {
         if (Target != null)
         {
-            Rotation = (float)(Target.Position - Position).Normalized().Angle() - Mathf.DegToRad(90);
+            cannonPivot.Rotation = (float)(Target.Position - cannonPivot.GlobalPosition).Normalized().Angle() - Mathf.DegToRad(90);
         }
     }
 
@@ -63,13 +60,13 @@ public partial class VirusCannon : Node2D
     {
         VirusProjectile virusProjectile = virusProjectileScene.Instantiate<VirusProjectile>();
 
-        virusProjectile.Init(Position, (Target.Position - Position).Normalized(), virusProjectileSpeed);
+        virusProjectile.Init(cannonPivot.GlobalPosition, (Target.Position - cannonPivot.GlobalPosition).Normalized(), VirusProjectileSpeed);
 
         VirusProjectileParent.AddChild(virusProjectile);
     }
 
     private void OnVirusProjectileTimerTimeout()
     {
-        Fire();
+        animationPlayer.Play("fire");
     }
 }

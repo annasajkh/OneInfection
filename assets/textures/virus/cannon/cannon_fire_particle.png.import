@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkh86ambm4eon"
-path="res://.godot/imported/virus_projectile.png-5768ee10534554dfa466ac3d28ed2cb1.ctex"
+uid="uid://fs7hvc6ooy0o"
+path="res://.godot/imported/cannon_fire_particle.png-0f635c299b3e4e33c2f46d0649845d61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/virus/virus_projectile.png"
-dest_files=["res://.godot/imported/virus_projectile.png-5768ee10534554dfa466ac3d28ed2cb1.ctex"]
+source_file="res://assets/textures/virus/cannon/cannon_fire_particle.png"
+dest_files=["res://.godot/imported/cannon_fire_particle.png-0f635c299b3e4e33c2f46d0649845d61.ctex"]
 
 [params]
 

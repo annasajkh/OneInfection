@@ -106,6 +106,8 @@ public partial class Main : Node2D
 
         virusCannon.Init(Util.ToWorldPosition(virusCannon.Window, new Vector2I(DisplayServer.ScreenGetSize().X / 2 - virusCannon.Window.Size.X / 2, 32)), niko, virusProjectileParent);
 
+        virusCannon.Window.WindowDestroyed += Phase1End;
+
         virusCannonParent.AddChild(virusCannon);
 
         this.virusCannon = virusCannon;
@@ -117,9 +119,14 @@ public partial class Main : Node2D
     {
         dialogBox.ConversationFinished -= Phase1;
 
-        virusCannon.VirusProjectileTimer.WaitTime = 0.5f;
-
-        virusCannon.Destroyed += Phase1End;
+        if (virusCannon != null)
+        {
+            virusCannon.VirusProjectileSpeed = 1000;
+        }
+        else
+        {
+            return;
+        }
 
         dialogBox.Play("phase_1", isAutoPlay: true);
     }

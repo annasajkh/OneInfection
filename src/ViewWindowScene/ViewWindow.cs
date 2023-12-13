@@ -46,13 +46,13 @@ public partial class ViewWindow : Window
 
         if (canBeClosed)
         {
+            EmitSignal(SignalName.WindowDestroyed);
             animationPlayer.Play("window_closing");
         }
     }
 
     private void WindowClosed()
     {
-        EmitSignal(SignalName.WindowDestroyed);
         GetParent().QueueFree();
     }
 

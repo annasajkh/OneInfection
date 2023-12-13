@@ -1,22 +1,63 @@
-[gd_scene load_steps=4 format=3 uid="uid://uk1lbqcbec2a"]
+[gd_scene load_steps=7 format=3 uid="uid://uk1lbqcbec2a"]
 
 [ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="1_5ujly"]
 [ext_resource type="Script" path="res://Src/BattleScenes/VirusCannonScene/VirusCannon.cs" id="1_vk5wk"]
-[ext_resource type="Texture2D" uid="uid://db5qdc51in3i2" path="res://assets/textures/virus/virus_cannon.png" id="2_rf2yl"]
+[ext_resource type="Texture2D" uid="uid://db5qdc51in3i2" path="res://assets/textures/virus/cannon/virus_cannon_carrier.png" id="2_rf2yl"]
+[ext_resource type="Texture2D" uid="uid://blhrtvsj6v6xe" path="res://assets/textures/virus/cannon/virus_cannon_barrel.png" id="3_8kjv3"]
 
-[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("virusProjectileTimer", "window")]
+[sub_resource type="Animation" id="Animation_8oqgc"]
+resource_name = "fire"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VirusCannonCarrier/VirusCannonBarrel:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.25, 1.25), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Fire"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s52tb"]
+_data = {
+"fire": SubResource("Animation_8oqgc")
+}
+
+[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("cannonPivot", "virusProjectileTimer", "animationPlayer", "window")]
 script = ExtResource("1_vk5wk")
+cannonPivot = NodePath("VirusCannonCarrier")
 virusProjectileTimer = NodePath("VirusProjectileTimer")
+animationPlayer = NodePath("AnimationPlayer")
 window = NodePath("ViewWindow")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="VirusCannonCarrier" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
 texture = ExtResource("2_rf2yl")
+
+[node name="VirusCannonBarrel" type="Sprite2D" parent="VirusCannonCarrier"]
+position = Vector2(0, 52.5)
+texture = ExtResource("3_8kjv3")
 
 [node name="ViewWindow" parent="." node_paths=PackedStringArray("positionToView") instance=ExtResource("1_5ujly")]
 transparent_bg = true
 size = Vector2i(320, 320)
-visible = true
 transparent = true
 positionToView = NodePath("..")
 canBeClosed = true
@@ -24,5 +65,10 @@ canBeClosed = true
 [node name="VirusProjectileTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_s52tb")
+}
 
 [connection signal="timeout" from="VirusProjectileTimer" to="." method="OnVirusProjectileTimerTimeout"]

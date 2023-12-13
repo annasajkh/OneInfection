@@ -1,7 +1,13 @@
 [
 	{
-		"face": "virus/virus_smile",
-		"dialog": "God dammit that's my favorite weapon why do you have to destroy it",
+		"face": "virus/virus_huh",
+		"dialog": "Huh what happen? why my cannon suddenly get destroyed?",
+		"delayToNext": 3
+	},
+
+	{
+		"face": "niko/niko",
+		"dialog": "%playerName%? are you still here?",
 		"delayToNext": 3
 	}
 ]
