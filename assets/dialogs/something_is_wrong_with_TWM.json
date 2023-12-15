@@ -1,42 +1,44 @@
-[
-	{
-		"face": "en/en_distressed_meow",
-		"dialog": "Wait Niko...",
-		"delayToNext": 2
-	},
-	{
-		"face": "niko/niko",
-		"dialog": "The World Machine? what happened?",
-		"delayToNext": 0.1
-	},
-	{
-		"face": "en/en_distressed_meow",
-		"dialog": "There....",
-		"delayToNext": 0.1
-	},
-	{
-		"face": "en/en_distressed_talk",
-		"dialog": "Is....",
-		"delayToNext": 0.1
-	},
-	{
-		"face": "en/en_distressed_meow",
-		"dialog": "Something....",
-		"delayToNext": 0.1
-	},
-	{
-		"face": "en/en_distressed_talk",
-		"dialog": "Wrong....",
-		"delayToNext": 0.1
-	},
-	{
-		"face": "en/en_distressed_meow",
-		"dialog": "With....",
-		"delayToNext": 0.1
-	},
-	{
-		"face": "en/en_distressed_talk",
-		"dialog": "Me....",
-		"delayToNext": 0.1
-	}
-]
+{
+	"conversation": [
+		{
+			"face": "en/en_distressed_meow",
+			"dialog": "Wait Niko...",
+			"delayToNext": 2
+		},
+		{
+			"face": "niko/niko",
+			"dialog": "The World Machine? what happened?",
+			"delayToNext": 0.1
+		},
+		{
+			"face": "en/en_distressed_meow",
+			"dialog": "There....",
+			"delayToNext": 0.1
+		},
+		{
+			"face": "en/en_distressed_talk",
+			"dialog": "Is....",
+			"delayToNext": 0.1
+		},
+		{
+			"face": "en/en_distressed_meow",
+			"dialog": "Something....",
+			"delayToNext": 0.1
+		},
+		{
+			"face": "en/en_distressed_talk",
+			"dialog": "Wrong....",
+			"delayToNext": 0.1
+		},
+		{
+			"face": "en/en_distressed_meow",
+			"dialog": "With....",
+			"delayToNext": 0.1
+		},
+		{
+			"face": "en/en_distressed_talk",
+			"dialog": "Me....",
+			"delayToNext": 0.1
+		}
+	]
+}

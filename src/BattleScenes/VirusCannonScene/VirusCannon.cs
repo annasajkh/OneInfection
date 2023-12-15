@@ -25,24 +25,35 @@ public partial class VirusCannon : Node2D
             return window;
         }
     }
-    public float VirusProjectileSpeed { get; set; } = 500;
+    public float VirusProjectileSpeed { get; set; } = 600;
 
     public Node2D Target { get; private set; }
     public Node2D VirusProjectileParent { get; private set; }
 
     private PackedScene virusProjectileScene;
 
-    public void Init(Vector2I position, Node2D target, Node2D virusProjectileParent)
+    private bool isUsingSubWindow;
+
+    public void Init(Vector2I position, Node2D target, Node2D virusProjectileParent, bool isUsingSubWindow)
     {
+        this.isUsingSubWindow = isUsingSubWindow;
+
         Position = position;
         Target = target;
         VirusProjectileParent = virusProjectileParent;
+
+        if (!isUsingSubWindow)
+        {
+            Window.Visible = false;
+        }
+        else
+        {
+            Window.Visible = true;
+        }
     }
 
     public override void _Ready()
     {
-        Window.Visible = true;
-
         virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusProjectileScene/VirusProjectile.tscn");
 
         animationPlayer.Play("fire");
@@ -60,7 +71,12 @@ public partial class VirusCannon : Node2D
     {
         VirusProjectile virusProjectile = virusProjectileScene.Instantiate<VirusProjectile>();
 
-        virusProjectile.Init(cannonPivot.GlobalPosition, (Target.Position - cannonPivot.GlobalPosition).Normalized(), VirusProjectileSpeed);
+        if (!isUsingSubWindow)
+        {
+            virusProjectile.Window.Visible = false;
+        }
+
+        virusProjectile.Init(cannonPivot.GlobalPosition, (Target.Position - cannonPivot.GlobalPosition).Normalized(), VirusProjectileSpeed, isUsingSubWindow);
 
         VirusProjectileParent.AddChild(virusProjectile);
     }

@@ -4,11 +4,16 @@ using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
 using OneInfection.Src.NikoScenes.NikoScene;
 using OneInfection.Src.Utils;
 using System.Collections.Generic;
-using System.IO;
 
 namespace OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 
-public class DialogItem
+
+public struct Conversation
+{
+    public List<DialogItem> conversation;
+}
+
+public struct DialogItem
 {
     public string face;
     public string dialog;
@@ -57,7 +62,8 @@ public partial class DialogBox : Control
 
         Visible = true;
         currentConversationIndex = 0;
-        conversation = JsonConvert.DeserializeObject<List<DialogItem>>(File.ReadAllText($"assets/dialogs/{conversationName}.json"));
+
+        conversation = JsonConvert.DeserializeObject<Conversation>(FileAccess.GetFileAsString($"res://assets/dialogs/{conversationName}.json").Replace("%playerName%", Global.playerName)).conversation;
 
         SetNextDialogBox();
     }
@@ -79,8 +85,6 @@ public partial class DialogBox : Control
 
             return;
         }
-
-        conversation[currentConversationIndex].dialog = conversation[currentConversationIndex].dialog.Replace("%playerName%", Global.playerName);
 
         string characterName = conversation[currentConversationIndex].face.Split("/")[0];
 

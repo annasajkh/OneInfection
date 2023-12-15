@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://behxa1irgpjtl"]
+
+[ext_resource type="Script" path="res://Src/BattleScenes/TransparentArena/TransparentArena.cs" id="1_82iuc"]
+[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="1_omr63"]
+
+[node name="TransparentArena" type="Node2D" node_paths=PackedStringArray("window")]
+script = ExtResource("1_82iuc")
+window = NodePath("ViewWindow")
+
+[node name="ViewWindow" parent="." node_paths=PackedStringArray("positionToView") instance=ExtResource("1_omr63")]
+transparent_bg = true
+unresizable = true
+borderless = true
+transparent = true
+mouse_passthrough = true
+positionToView = NodePath("..")

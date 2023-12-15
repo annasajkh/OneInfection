@@ -18,7 +18,7 @@ public partial class Niko : CharacterBody2D
 
     public Direction CurrentDirection { get; set; } = Direction.Down;
     public bool IsWalking { get; set; }
-    public float Speed { get; set; } = 100;
+    public float Speed { get; set; } = 75;
 
     public bool IsOutside { get; set; }
 

@@ -1,7 +1,9 @@
-[
-	{
-		"face": "virus/virus_smile",
-		"dialog": "How about we make it faster?",
-		"delayToNext": 1000
-	}
-]
+{
+	"conversation": [
+		{
+			"face": "virus/virus_smile",
+			"dialog": "How about we make it faster?",
+			"delayToNext": 1000
+		}
+	]
+}

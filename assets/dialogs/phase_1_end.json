@@ -1,13 +1,39 @@
-[
-	{
-		"face": "virus/virus_huh",
-		"dialog": "Huh what happen? why my cannon suddenly get destroyed?",
-		"delayToNext": 3
-	},
+{
+	"conversation": [
+		{
+			"face": "virus/virus_shock",
+			"dialog": "Huh what happen? why my cannon suddenly get destroyed?",
+			"delayToNext": 0.5
+		},
 
-	{
-		"face": "niko/niko",
-		"dialog": "%playerName%? are you still here?",
-		"delayToNext": 3
-	}
-]
+		{
+			"face": "niko/niko",
+			"dialog": "%playerName%? are you still here?",
+			"delayToNext": 0.5
+		},
+
+		{
+			"face": "virus/virus5",
+			"dialog": "Ah that's because of %playerName% isn't it? the owner of this PC",
+			"delayToNext": 0.5
+		},
+
+		{
+			"face": "virus/virus_83c",
+			"dialog": "You can't communicate to them as long as i'm here",
+			"delayToNext": 0.5
+		},
+
+		{
+			"face": "niko/niko",
+			"dialog": "You monster",
+			"delayToNext": 0.5
+		},
+
+		{
+			"face": "virus/virus_smile",
+			"dialog": "You know what? i'm not going to let you interfere with me %playerName%",
+			"delayToNext": 0.5
+		}
+	]
+}

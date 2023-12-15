@@ -16,7 +16,6 @@ public partial class ViewWindow : Window
     [Export] private bool canBeClosed;
 
 
-
     private bool shaking;
 
     public override void _Ready()

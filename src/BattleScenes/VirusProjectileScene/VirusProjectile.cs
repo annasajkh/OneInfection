@@ -19,14 +19,20 @@ public partial class VirusProjectile : Area2D
     public float Speed { get; set; }
     public Vector2 Direction { get; set; }
 
-
-    public void Init(Vector2 position, Vector2 direction, float speed)
+    public void Init(Vector2 position, Vector2 direction, float speed, bool isUsingSubWindow)
     {
         Position = position;
         Direction = direction;
         Speed = speed;
 
-        window.Visible = true;
+        if (!isUsingSubWindow)
+        {
+            Window.Visible = false;
+        }
+        else
+        {
+            Window.Visible = true;
+        }
     }
 
     public override void _Process(double delta)

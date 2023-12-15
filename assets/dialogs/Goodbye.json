@@ -1,7 +1,9 @@
-[
-	{
-		"face": "niko/niko2",
-		"dialog": "Goodbye, %playerName%...",
-		"delayToNext": 0.5
-	}
-]
+{
+	"conversation": [
+		{
+			"face": "niko/niko2",
+			"dialog": "Goodbye, %playerName%...",
+			"delayToNext": 0.5
+		}
+	]
+}

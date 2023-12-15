@@ -50,7 +50,7 @@ _data = {
 "goodbye_niko": SubResource("Animation_pfkmk")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusCannonParent")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusCannonParent", "transparentArenaParent")]
 script = ExtResource("1_dc7x5")
 niko = NodePath("Niko")
 dialogBox = NodePath("World/CanvasLayer/DialogBox")
@@ -58,6 +58,9 @@ animationPlayer = NodePath("MainAnimation")
 world = NodePath("World")
 virusProjectileParent = NodePath("World/VirusProjectileParent")
 virusCannonParent = NodePath("World/VirusCannonParent")
+transparentArenaParent = NodePath("TransparentArenaParent")
+
+[node name="TransparentArenaParent" type="Node2D" parent="."]
 
 [node name="World" type="Node2D" parent="."]
 

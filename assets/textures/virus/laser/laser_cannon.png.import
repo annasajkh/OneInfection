@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fs7hvc6ooy0o"
-path="res://.godot/imported/cannon_fire_particle.png-0f635c299b3e4e33c2f46d0649845d61.ctex"
+uid="uid://cojtiflc3j2jk"
+path="res://.godot/imported/laser_cannon.png-7b28c6b4a83522ce49f06547c3f49a9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/virus/cannon/cannon_fire_particle.png"
-dest_files=["res://.godot/imported/cannon_fire_particle.png-0f635c299b3e4e33c2f46d0649845d61.ctex"]
+source_file="res://assets/textures/virus/laser/laser_cannon.png"
+dest_files=["res://.godot/imported/laser_cannon.png-7b28c6b4a83522ce49f06547c3f49a9e.ctex"]
 
 [params]
 

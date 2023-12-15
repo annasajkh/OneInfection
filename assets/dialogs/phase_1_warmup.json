@@ -1,19 +1,21 @@
-[
-	{
-		"face": "virus/virus_83c",
-		"dialog": "Say hello to my cannon",
-		"delayToNext": 3
-	},
+{
+	"conversation": [
+		{
+			"face": "virus/virus_83c",
+			"dialog": "Say hello to my cannon",
+			"delayToNext": 3
+		},
 
-	{
-		"face": "virus/virus_smile",
-		"dialog": "Try to dodge it, it's not that hard",
-		"delayToNext": 10
-	},
+		{
+			"face": "virus/virus_smile",
+			"dialog": "Try to dodge it, it's not that hard",
+			"delayToNext": 10
+		},
 
-	{
-		"face": "virus/virus5",
-		"dialog": "Huh this is kinda boring isn't it?",
-		"delayToNext": 3
-	}
-]
+		{
+			"face": "virus/virus5",
+			"dialog": "Huh this is kinda boring isn't it?",
+			"delayToNext": 3
+		}
+	]
+}
