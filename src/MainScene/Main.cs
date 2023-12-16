@@ -32,6 +32,7 @@ public partial class Main : Node2D
         mainWindow = GetWindow();
         mainWindow.Title = "Oneshot";
 
+
         PlayMainDialogChain();
     }
 
