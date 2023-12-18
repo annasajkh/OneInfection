@@ -2,7 +2,7 @@ using Godot;
 using OneInfection.Src.DialogBoxScenes.OutsideDialogBoxScene;
 using OneInfection.Src.ViewWindowScene;
 
-namespace OneInfection.Src.NikoScenes.NikoScene;
+namespace OneInfection.Src.NikoScene;
 
 public enum Direction
 {
@@ -183,6 +183,39 @@ public partial class Niko : CharacterBody2D
         Act();
 
         MoveAndSlide();
+
+
+        // Prevent niko from going outside screen boundary
+        if (IsOutside)
+        {
+            Vector2I screenSize = DisplayServer.ScreenGetSize();
+
+            if (window.Position.X + window.Size.X / 2 + 24 > screenSize.X)
+            {
+                float collisionDepth = Mathf.Abs(screenSize.X - (window.Position.X + window.Size.X / 2 + 24));
+
+                Position += Vector2.Left * collisionDepth;
+            }
+            else if (window.Position.X + window.Size.X / 2 - 24 < 0)
+            {
+                float collisionDepth = Mathf.Abs(window.Position.X + window.Size.X / 2 - 24);
+
+                Position += Vector2.Right * collisionDepth;
+            }
+            else if (window.Position.Y + window.Size.Y / 2 + 32 > screenSize.Y)
+            {
+                float collisionDepth = Mathf.Abs(screenSize.Y - (window.Position.Y + window.Size.Y / 2 + 32));
+
+                Position += Vector2.Up * collisionDepth;
+            }
+            else if (window.Position.Y + window.Size.Y / 2 - 32 < 0)
+            {
+                float collisionDepth = Mathf.Abs(window.Position.Y + window.Size.Y / 2 - 32);
+
+                Position += Vector2.Down * collisionDepth;
+            }
+        }
+
     }
 
     private void OnHitBoxAreaEntered(Area2D area)

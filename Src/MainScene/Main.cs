@@ -1,6 +1,6 @@
 using Godot;
 using OneInfection.Src.DialogBoxScenes.DialogBoxScene;
-using OneInfection.Src.NikoScenes.NikoScene;
+using OneInfection.Src.NikoScene;
 using OneInfection.Src.Utils;
 
 
@@ -15,6 +15,7 @@ public partial class Main : Node2D
     [Export] private Node2D virusProjectileParent;
     [Export] private Node2D virusCannonParent;
     [Export] private Node2D transparentArenaParent;
+    [Export] private Timer damageOverTime;
 
     public bool IsMainWindowShaking { get; set; }
 
@@ -52,7 +53,7 @@ public partial class Main : Node2D
 
     public void SomethingIsWrongWithTWM()
     {
-        dialogBox.Play("something_is_wrong_with_TWM");
+        dialogBox.Play("something_is_wrong_with_twm");
 
         dialogBox.ConversationFinished += VirusInfectingTWM;
     }
@@ -63,7 +64,7 @@ public partial class Main : Node2D
 
         IsMainWindowShaking = true;
 
-        dialogBox.Play("virus_infecting_TWM");
+        dialogBox.Play("virus_infecting_twm");
 
 
         dialogBox.ConversationFinished += VirusTakingOverTWM;
@@ -83,7 +84,7 @@ public partial class Main : Node2D
 
         mainWindow.MoveToCenter();
 
-        dialogBox.Play("virus_taking_over_TWM");
+        dialogBox.Play("virus_taking_over_twm");
 
         dialogBox.ConversationFinished += BattleStart;
     }
@@ -138,6 +139,7 @@ public partial class Main : Node2D
         niko.Window.Visible = false;
 
         TransparentArena transparentArena = transparentArenaScene.Instantiate<TransparentArena>();
+
         transparentArena.Init(Global.WorldOutsideOffset + DisplayServer.ScreenGetSize() / 2);
         transparentArenaParent.AddChild(transparentArena);
     }
@@ -145,8 +147,9 @@ public partial class Main : Node2D
     private void Phase2()
     {
         dialogBox.ConversationFinished -= Phase2;
-
         dialogBox.Play("phase_2", true);
+
+        damageOverTime.Start();
 
         var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
 
@@ -195,6 +198,17 @@ public partial class Main : Node2D
         else if (forceCenter)
         {
             mainWindow.MoveToCenter();
+        }
+    }
+
+    private void OnDamageOverTimeTimeout()
+    {
+        foreach (var child in virusCannonParent.GetChildren())
+        {
+            if (child is VirusCannon virusCannon)
+            {
+                virusCannon.HealthComponent.Damage(5);
+            }
         }
     }
 }

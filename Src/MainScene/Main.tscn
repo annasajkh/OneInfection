@@ -50,7 +50,7 @@ _data = {
 "goodbye_niko": SubResource("Animation_pfkmk")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusCannonParent", "transparentArenaParent")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusCannonParent", "transparentArenaParent", "damageOverTime")]
 script = ExtResource("1_dc7x5")
 niko = NodePath("Niko")
 dialogBox = NodePath("World/CanvasLayer/DialogBox")
@@ -59,6 +59,7 @@ world = NodePath("World")
 virusProjectileParent = NodePath("World/VirusProjectileParent")
 virusCannonParent = NodePath("World/VirusCannonParent")
 transparentArenaParent = NodePath("TransparentArenaParent")
+damageOverTime = NodePath("DamageOverTime")
 
 [node name="TransparentArenaParent" type="Node2D" parent="."]
 
@@ -89,4 +90,7 @@ libraries = {
 "": SubResource("AnimationLibrary_4ngi3")
 }
 
+[node name="DamageOverTime" type="Timer" parent="."]
+
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
+[connection signal="timeout" from="DamageOverTime" to="." method="OnDamageOverTimeTimeout"]

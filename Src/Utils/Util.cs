@@ -4,6 +4,14 @@ using Godot;
 
 namespace OneInfection.Src.Utils;
 
+public enum ScreenRegion
+{
+    Left,
+    Right,
+    Top,
+    Bottom,
+    None
+}
 
 public static class Util
 {

@@ -16,9 +16,4 @@ public partial class TransparentArena : Node2D
         window.Size = DisplayServer.ScreenGetSize();
         window.MoveToCenter();
     }
-
-    public override void _Process(double delta)
-    {
-
-    }
 }

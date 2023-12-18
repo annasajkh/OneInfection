@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://def5abv623tku"]
+
+[ext_resource type="Script" path="res://Src/Components/VirusHealthBarComponent/VirusHealthBarComponent.cs" id="1_mose4"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_fcusq"]
+
+[node name="VirusHealthBarComponent" type="Node2D" node_paths=PackedStringArray("meshInstance2D")]
+script = ExtResource("1_mose4")
+meshInstance2D = NodePath("MeshInstance2D")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0.203922, 0.682353, 0.00784314, 1)
+position = Vector2(1.49012e-08, 0)
+scale = Vector2(250, 31.5)
+mesh = SubResource("QuadMesh_fcusq")

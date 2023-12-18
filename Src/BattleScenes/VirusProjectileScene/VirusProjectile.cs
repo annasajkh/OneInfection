@@ -2,7 +2,7 @@ using Godot;
 using OneInfection.Src.Utils;
 using OneInfection.Src.ViewWindowScene;
 
-namespace OneInfection.Src.ProjectileScene;
+namespace OneInfection.Src.BattleScenes.VirusProjectileScene;
 
 public partial class VirusProjectile : Area2D
 {
