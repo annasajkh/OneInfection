@@ -13,9 +13,15 @@
 		},
 
 		{
-			"face": "virus/virus_smile",
+			"face": "virus/virus_shock",
 			"dialog": "Huh why my cannon taking damage?",
-			"delayToNext": 30
+			"delayToNext": 10
+		},
+		
+		{
+			"face": "virus/virus_pancakes",
+			"dialog": "God fucking dammit fine i don't care anymore",
+			"delayToNext": 5
 		}
 	]
 }

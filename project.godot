@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="OneInfection"
-run/main_scene="res://Src/MainScene/Main.tscn"
+run/main_scene="res://Src/InstructionScene/Instruction.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.png"
 
