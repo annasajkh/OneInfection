@@ -30,6 +30,7 @@ public partial class OutsideDialogBox : Node2D
         dialogSound.Stream = GD.Load<AudioStream>("res://assets/sounds/normal_dialog.wav");
     }
 
+
     public void Play(List<DialogItem> conversation, bool isAutoPlay = false)
     {
         this.isAutoPlay = isAutoPlay;
@@ -39,6 +40,17 @@ public partial class OutsideDialogBox : Node2D
         Visible = true;
 
         SetNextDialogBox();
+    }
+
+    public void Skip()
+    {
+        dialog.VisibleCharacters = dialog.Text.Length;
+
+        if (!speakDelay.IsStopped() && acceptTimer.IsStopped())
+        {
+            speakDelay.Stop();
+            acceptTimer.Start();
+        }
     }
 
     private void SetNextDialogBox()

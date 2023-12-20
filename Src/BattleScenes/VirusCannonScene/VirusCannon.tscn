@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://uk1lbqcbec2a"]
+[gd_scene load_steps=15 format=3 uid="uid://uk1lbqcbec2a"]
 
 [ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="1_5ujly"]
 [ext_resource type="Script" path="res://Src/BattleScenes/VirusCannonScene/VirusCannon.cs" id="1_vk5wk"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dbgeodyl56fvi" path="res://Src/Components/HealthComponent/HealthComponent.tscn" id="5_2jbb8"]
 [ext_resource type="Texture2D" uid="uid://bkh86ambm4eon" path="res://assets/textures/virus/cannon/virus_cannon_projectile.png" id="5_ebeu6"]
 [ext_resource type="PackedScene" uid="uid://def5abv623tku" path="res://Src/Components/VirusHealthBarComponent/VirusHealthBarComponent.tscn" id="6_jtosa"]
-[ext_resource type="Animation" uid="uid://cnu3xr66hrbcg" path="res://Src/BattleScenes/VirusCannonScene/damage.res" id="8_2ulnl"]
 
 [sub_resource type="Gradient" id="Gradient_k81h6"]
 offsets = PackedFloat32Array(0.00367647, 1)
@@ -25,11 +24,6 @@ angular_velocity_min = 250.0
 angular_velocity_max = 500.0
 gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_7edhn")
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_on11k"]
-_data = {
-"damage": ExtResource("8_2ulnl")
-}
 
 [sub_resource type="Animation" id="Animation_b3lo4"]
 length = 0.001
@@ -75,7 +69,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/path = NodePath("DeathParticle:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -122,13 +116,13 @@ _data = {
 "fire": SubResource("Animation_8oqgc")
 }
 
-[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("cannonPivot", "virusProjectileTimer", "animationPlayer", "virusHealthBarComponent", "damageAnimation", "healthComponent", "window", "virusCannonCarrier")]
+[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("cannonPivot", "virusProjectileTimer", "animationPlayer", "virusHealthBarComponent", "deathParticle", "healthComponent", "window", "virusCannonCarrier")]
 script = ExtResource("1_vk5wk")
 cannonPivot = NodePath("VirusCannonCarrier")
 virusProjectileTimer = NodePath("VirusProjectileTimer")
 animationPlayer = NodePath("AnimationPlayer")
 virusHealthBarComponent = NodePath("VirusHealthBarComponent")
-damageAnimation = NodePath("DamageAnimation")
+deathParticle = NodePath("DeathParticle")
 healthComponent = NodePath("HealthComponent")
 window = NodePath("ViewWindow")
 virusCannonCarrier = NodePath("VirusCannonCarrier")
@@ -152,7 +146,7 @@ canBeClosed = true
 wait_time = 3.0
 autostart = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="DeathParticle" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_ptga7")
@@ -167,16 +161,10 @@ MaxHealth = 100.0
 position = Vector2(0, -128)
 healthComponent = NodePath("../HealthComponent")
 
-[node name="DamageAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_on11k")
-}
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_s52tb")
 }
 
 [connection signal="timeout" from="VirusProjectileTimer" to="." method="OnVirusProjectileTimerTimeout"]
-[connection signal="Damaged" from="HealthComponent" to="." method="OnHealthComponentDamaged"]
 [connection signal="Died" from="HealthComponent" to="." method="OnHealthComponentDied"]

@@ -2,6 +2,7 @@ using Godot;
 using OneInfection.Src.DialogBoxScenes.DialogBoxScene;
 using OneInfection.Src.NikoScene;
 using OneInfection.Src.Utils;
+using System.Collections.Generic;
 
 
 namespace OneInfection.Src.MainScene;
@@ -21,18 +22,21 @@ public partial class Main : Node2D
 
     private PackedScene virusCannonScene;
     private PackedScene transparentArenaScene;
+    private PackedScene virusWarningScene;
 
     private Window mainWindow;
     private bool forceCenter = true;
+
+    private Stack<VirusCannon> virusCannons = new Stack<VirusCannon>();
 
     public override void _Ready()
     {
         virusCannonScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusCannonScene/VirusCannon.tscn");
         transparentArenaScene = GD.Load<PackedScene>("res://Src/BattleScenes/TransparentArena/TransparentArena.tscn");
+        virusWarningScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusWarning/VirusWarning.tscn");
 
         mainWindow = GetWindow();
         mainWindow.Title = "Oneshot";
-
 
         PlayMainDialogChain();
     }
@@ -151,16 +155,36 @@ public partial class Main : Node2D
 
         damageOverTime.Start();
 
-        var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
 
-        virusCannon.VirusProjectileTimer.WaitTime = 1f;
-
-        virusCannon.Init(Util.ToWorldPosition(virusCannon.Window, new Vector2I(DisplayServer.ScreenGetSize().X / 2 - virusCannon.Window.Size.X / 2, 32)), niko, virusProjectileParent, false);
-
-        virusCannonParent.AddChild(virusCannon);
+        SpawnVirusCannon(position: new Vector2I(GD.RandRange(0, DisplayServer.ScreenGetSize().X - 100), GD.RandRange(0, DisplayServer.ScreenGetSize().Y - 100)),
+                         isUsingSubWindow: false);
     }
 
     #endregion
+
+    private void SpawnVirusCannon(Vector2I position, bool isUsingSubWindow)
+    {
+        var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
+
+        Vector2I spawnPosition = Util.ToWorldPosition(virusCannon.Window, position);
+
+        virusCannon.Init(spawnPosition, niko, virusProjectileParent, isUsingSubWindow);
+
+        var virusWarning = virusWarningScene.Instantiate<VirusWarning>();
+        virusWarning.Position = spawnPosition;
+        virusCannonParent.AddChild(virusWarning);
+
+        virusWarning.SpawnVirus += SpawnVirusCannon;
+
+        virusCannons.Push(virusCannon);
+
+    }
+
+    private void SpawnVirusCannon()
+    {
+        virusCannonParent.AddChild(virusCannons.Pop());
+    }
+
 
     private void OnFirstHouseGoOutside()
     {
@@ -181,11 +205,6 @@ public partial class Main : Node2D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("skip"))
-        {
-            dialogBox.Skip();
-        }
-
         if (IsMainWindowShaking)
         {
             mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));

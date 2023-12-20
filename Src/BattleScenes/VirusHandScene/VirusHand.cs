@@ -1,9 +1,9 @@
 using Godot;
 
-namespace OneInfection.Src.VirusHandScenes.VirusRightHandScene;
+namespace OneInfection.Src.VirusHandScenes.VirusRightScene;
 
 
-public partial class VirusRightHand : Node2D
+public partial class VirusHand : Area2D
 {
     public override void _Ready()
     {

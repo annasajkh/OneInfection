@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxt24a8odprx1"]
+
+[ext_resource type="Script" path="res://Src/VirusHandScene/VirusHand.cs" id="1_2nafi"]
+[ext_resource type="Texture2D" uid="uid://btjvjc0lv2teb" path="res://assets/textures/virus/virus_hand_right_idle.png" id="2_o7v65"]
+[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="3_88mby"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfu7h"]
+size = Vector2(112, 98)
+
+[node name="VirusHand" type="Area2D"]
+script = ExtResource("1_2nafi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("2_o7v65")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 9)
+shape = SubResource("RectangleShape2D_dfu7h")
+
+[node name="ViewWindow" parent="." node_paths=PackedStringArray("positionToView") instance=ExtResource("3_88mby")]
+positionToView = NodePath("..")

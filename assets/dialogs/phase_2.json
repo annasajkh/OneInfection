@@ -1,27 +1,27 @@
-{
+ {
 	"conversation": [
 		{
 			"face": "virus/virus_pancakes",
 			"dialog": "No more windows!!!",
-			"delayToNext": 3
+			"delayToNext": 10
 		},
 
 		{
 			"face": "virus/virus_smile",
 			"dialog": "What can you do now %playerName%? NOTHING!!! HAHAHA",
-			"delayToNext": 3
+			"delayToNext": 5
 		},
 
 		{
 			"face": "virus/virus_shock",
 			"dialog": "Huh why my cannon taking damage?",
-			"delayToNext": 10
+			"delayToNext": 8
 		},
-		
+
 		{
 			"face": "virus/virus_pancakes",
-			"dialog": "God fucking dammit fine i don't care anymore",
-			"delayToNext": 5
+			"dialog": "God dammit fine i don't care anymore",
+			"delayToNext": 2
 		}
 	]
 }

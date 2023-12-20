@@ -47,6 +47,7 @@ public partial class DialogBox : Control
     private AudioStream normalDialogSound;
     private AudioStream robotDialogSound;
 
+    private string characterName;
 
     public override void _Ready()
     {
@@ -71,9 +72,18 @@ public partial class DialogBox : Control
 
     public void Skip()
     {
-        currentConversationIndex = conversation.Count;
+        if (characterName == "niko" && niko.IsOutside)
+        {
+            outsideDialogBox.Skip();
+        }
+
         dialog.VisibleCharacters = dialog.Text.Length;
-        SetNextDialogBox();
+
+        if (!speakDelay.IsStopped() && acceptTimer.IsStopped())
+        {
+            speakDelay.Stop();
+            acceptTimer.Start();
+        }
     }
 
     private void SetNextDialogBox()
@@ -87,7 +97,7 @@ public partial class DialogBox : Control
             return;
         }
 
-        string characterName = conversation[currentConversationIndex].face.Split("/")[0];
+        characterName = conversation[currentConversationIndex].face.Split("/")[0];
 
         if (characterName == "niko" && niko.IsOutside)
         {
@@ -141,6 +151,11 @@ public partial class DialogBox : Control
         else
         {
             continueDialogArrow.Visible = false;
+        }
+
+        if (Input.IsActionJustPressed("ui_accept") && !conversationFinished && !isAutoPlay)
+        {
+            Skip();
         }
 
         if (Input.IsActionJustPressed("ui_accept") && conversationFinished && !isAutoPlay)

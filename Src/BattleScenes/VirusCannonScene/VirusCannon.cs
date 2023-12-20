@@ -9,7 +9,7 @@ public partial class VirusCannon : Node2D
     [Export] private Timer virusProjectileTimer;
     [Export] private AnimationPlayer animationPlayer;
     [Export] private VirusHealthBarComponent virusHealthBarComponent;
-    [Export] private AnimationPlayer damageAnimation;
+    [Export] private GpuParticles2D deathParticle;
 
     public VirusHealthBarComponent VirusHealthBarComponent
     {
@@ -93,6 +93,12 @@ public partial class VirusCannon : Node2D
         virusProjectileScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusProjectileScene/VirusProjectile.tscn");
 
         animationPlayer.Play("fire");
+
+        if (!isUsingSubWindow)
+        {
+            deathParticle.Finished += QueueFree;
+        }
+
     }
 
     private void Fire()
@@ -129,11 +135,6 @@ public partial class VirusCannon : Node2D
     private void OnVirusProjectileTimerTimeout()
     {
         animationPlayer.Play("fire");
-    }
-
-    private void OnHealthComponentDamaged()
-    {
-        damageAnimation.Play("damage");
     }
 
     private void OnHealthComponentDied()

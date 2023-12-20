@@ -6,35 +6,6 @@
 [sub_resource type="LabelSettings" id="LabelSettings_8a38s"]
 font = ExtResource("1_vrfd1")
 
-[sub_resource type="Animation" id="Animation_ymigw"]
-resource_name = "change_scene"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Label:label_settings:font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"ChangeToMainScene"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_x1454"]
 length = 0.001
 tracks/0/type = "value"
@@ -48,6 +19,36 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ymigw"]
+resource_name = "change_scene"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ChangeToMainScene"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fwk4b"]
@@ -81,7 +82,8 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Controls
 WASD - Move
-P - Skip to next conversation"
+Enter - Accept/Next dialog
+P - Skip dialog"
 label_settings = SubResource("LabelSettings_8a38s")
 horizontal_alignment = 1
 vertical_alignment = 1
