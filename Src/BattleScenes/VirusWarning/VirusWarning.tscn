@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dh0slpvtm1xxc"]
+[gd_scene load_steps=7 format=3 uid="uid://dh0slpvtm1xxc"]
 
 [ext_resource type="Texture2D" uid="uid://cjaw47eyonwqb" path="res://assets/textures/virus/virus_spawn_warning.png" id="1_dklnq"]
 [ext_resource type="Script" path="res://Src/BattleScenes/VirusWarning/VirusWarning.cs" id="2_8fqpe"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_imh6p"]
 
 [sub_resource type="Animation" id="Animation_axpj6"]
 length = 0.001
@@ -40,9 +42,17 @@ _data = {
 "blink": SubResource("Animation_5b7wf")
 }
 
-[node name="VirusWarning" type="Sprite2D"]
+[node name="VirusWarning" type="Sprite2D" node_paths=PackedStringArray("timer", "meshInstance2D")]
 texture = ExtResource("1_dklnq")
 script = ExtResource("2_8fqpe")
+timer = NodePath("Timer")
+meshInstance2D = NodePath("MeshInstance2D")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1, 0.168627, 0.168627, 0.376471)
+position = Vector2(-1.19209e-06, 9.53674e-06)
+scale = Vector2(128, 128)
+mesh = SubResource("QuadMesh_imh6p")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -3,7 +3,7 @@
 		{
 			"face": "virus/virus_pancakes",
 			"dialog": "No more windows!!!",
-			"delayToNext": 10
+			"delayToNext": 3
 		},
 
 		{
@@ -14,8 +14,8 @@
 
 		{
 			"face": "virus/virus_shock",
-			"dialog": "Huh why my cannon taking damage?",
-			"delayToNext": 8
+			"dialog": "Huh why my cannon is taking damage?",
+			"delayToNext": 14
 		},
 
 		{

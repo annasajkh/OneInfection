@@ -50,16 +50,18 @@ _data = {
 "goodbye_niko": SubResource("Animation_pfkmk")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusCannonParent", "transparentArenaParent", "damageOverTime")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusParent", "transparentArenaParent", "damageOverTime", "virusHandSpawnTimer", "virusCannonSpawnTimer")]
 script = ExtResource("1_dc7x5")
 niko = NodePath("Niko")
 dialogBox = NodePath("World/CanvasLayer/DialogBox")
 animationPlayer = NodePath("MainAnimation")
 world = NodePath("World")
 virusProjectileParent = NodePath("World/VirusProjectileParent")
-virusCannonParent = NodePath("World/VirusCannonParent")
+virusParent = NodePath("World/VirusParent")
 transparentArenaParent = NodePath("TransparentArenaParent")
 damageOverTime = NodePath("DamageOverTime")
+virusHandSpawnTimer = NodePath("VirusHandSpawnTimer")
+virusCannonSpawnTimer = NodePath("VirusCannonSpawnTimer")
 
 [node name="TransparentArenaParent" type="Node2D" parent="."]
 
@@ -75,7 +77,7 @@ niko = NodePath("../../../Niko")
 
 [node name="VirusProjectileParent" type="Node2D" parent="World"]
 
-[node name="VirusCannonParent" type="Node2D" parent="World"]
+[node name="VirusParent" type="Node2D" parent="World"]
 
 [node name="Niko" parent="." instance=ExtResource("3_tmrfw")]
 position = Vector2(330, 452)
@@ -92,5 +94,13 @@ libraries = {
 
 [node name="DamageOverTime" type="Timer" parent="."]
 
+[node name="VirusHandSpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="VirusCannonSpawnTimer" type="Timer" parent="."]
+wait_time = 18.0
+
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
 [connection signal="timeout" from="DamageOverTime" to="." method="OnDamageOverTimeTimeout"]
+[connection signal="timeout" from="VirusHandSpawnTimer" to="." method="OnVirusHandSpawnTimerTimeout"]
+[connection signal="timeout" from="VirusCannonSpawnTimer" to="." method="OnVirusCannonSpawnTimerTimeout"]

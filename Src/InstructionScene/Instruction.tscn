@@ -83,7 +83,8 @@ grow_vertical = 2
 text = "Controls
 WASD - Move
 Enter - Accept/Next dialog
-P - Skip dialog"
+P - Skip Conversation
+Escape - Force Quit"
 label_settings = SubResource("LabelSettings_8a38s")
 horizontal_alignment = 1
 vertical_alignment = 1

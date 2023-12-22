@@ -1,3 +1,51 @@
 {
-	
+	"conversation": [
+		{
+			"face": "virus/virus_pancakes",
+			"dialog": "I really don't care",
+			"delayToNext": 10
+		},
+
+		{
+			"face": "virus/virus_83c",
+			"dialog": "THIS IS SO MUCH FUN!!!!!",
+			"delayToNext": 5
+		},
+
+		{
+			"face": "virus/virus_speak",
+			"dialog": "I REALLY LOVE IT AHAHAHHA",
+			"delayToNext": 5
+		},
+
+		{
+			"face": "virus/virus_smile",
+			"dialog": "MORE MORE MORE MORE",
+			"delayToNext": 5
+		},
+
+		{
+			"face": "virus/virus_huh",
+			"dialog": "You are so focus right now huh",
+			"delayToNext": 5
+		},
+
+		{
+			"face": "virus/virus5",
+			"dialog": "I don't you even read this sentence",
+			"delayToNext": 5
+		},
+
+		{
+			"face": "virus/virus_83c",
+			"dialog": "So i can say silly things hehehe",
+			"delayToNext": 5
+		},
+		
+		{
+			"face": "virus/virus_speak",
+			"dialog": "Niko is a cat",
+			"delayToNext": 5
+		}
+	]
 }

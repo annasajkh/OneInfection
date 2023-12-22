@@ -86,6 +86,21 @@ public partial class DialogBox : Control
         }
     }
 
+    public void SkipConversation()
+    {
+        if (isAutoPlay)
+        {
+            return;
+        }
+
+        Visible = false;
+        outsideDialogBox.Visible = false;
+
+        currentConversationIndex = conversation.Count;
+        dialog.VisibleCharacters = dialog.Text.Length;
+        SetNextDialogBox();
+    }
+
     private void SetNextDialogBox()
     {
         if (currentConversationIndex > conversation.Count - 1)

@@ -1,22 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxt24a8odprx1"]
+[gd_scene load_steps=4 format=3 uid="uid://cxt24a8odprx1"]
 
-[ext_resource type="Script" path="res://Src/VirusHandScene/VirusHand.cs" id="1_2nafi"]
-[ext_resource type="Texture2D" uid="uid://btjvjc0lv2teb" path="res://assets/textures/virus/virus_hand_right_idle.png" id="2_o7v65"]
-[ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="3_88mby"]
+[ext_resource type="Script" path="res://Src/BattleScenes/VirusHandScene/VirusHand.cs" id="1_qxxr8"]
+[ext_resource type="Texture2D" uid="uid://btjvjc0lv2teb" path="res://assets/textures/virus/virus_hand_right_idle.png" id="2_8d0mu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfu7h"]
 size = Vector2(112, 98)
 
-[node name="VirusHand" type="Area2D"]
-script = ExtResource("1_2nafi")
+[node name="VirusHand" type="Area2D" groups=["virus"]]
+scale = Vector2(2, 2)
+script = ExtResource("1_qxxr8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 1)
-texture = ExtResource("2_o7v65")
+texture = ExtResource("2_8d0mu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, 9)
 shape = SubResource("RectangleShape2D_dfu7h")
 
-[node name="ViewWindow" parent="." node_paths=PackedStringArray("positionToView") instance=ExtResource("3_88mby")]
-positionToView = NodePath("..")
+[node name="Timer" type="Timer" parent="." groups=["virus"]]
+wait_time = 5.0
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
