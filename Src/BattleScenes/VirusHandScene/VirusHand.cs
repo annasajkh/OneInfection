@@ -15,7 +15,9 @@ public partial class VirusHand : Area2D
 {
     private VirusHandMoveDir moveDir;
 
-    private float speed = 500;
+    private float speed = 600;
+
+    [Export] private Sprite2D sprite2D;
 
     public void Init(VirusHandMoveDir moveDir)
     {
@@ -27,18 +29,22 @@ public partial class VirusHand : Area2D
         {
             case VirusHandMoveDir.LeftRight:
                 Position = new Vector2I(-128 + Global.WorldOutsideOffset.X, (int)(128 * 0.6f) + Global.WorldOutsideOffset.Y);
+                sprite2D.Texture = GD.Load<Texture2D>("res://assets/textures/virus/virus_hand_left_idle.png");
                 break;
 
             case VirusHandMoveDir.RightLeft:
                 Position = new Vector2I(screenSize.X + 128 + Global.WorldOutsideOffset.X, screenSize.Y - 120 + Global.WorldOutsideOffset.Y);
+                sprite2D.Texture = GD.Load<Texture2D>("res://assets/textures/virus/virus_hand_right_idle.png");
                 break;
 
             case VirusHandMoveDir.TopDown:
                 Position = new Vector2I(Global.WorldOutsideOffset.X + screenSize.X - 128, -128 + Global.WorldOutsideOffset.Y);
+                sprite2D.Texture = GD.Load<Texture2D>("res://assets/textures/virus/virus_hand_right_idle.png");
                 break;
 
             case VirusHandMoveDir.DownTop:
                 Position = new Vector2I(Global.WorldOutsideOffset.X + 128, screenSize.Y + Global.WorldOutsideOffset.Y);
+                sprite2D.Texture = GD.Load<Texture2D>("res://assets/textures/virus/virus_hand_left_idle.png");
                 break;
         }
     }

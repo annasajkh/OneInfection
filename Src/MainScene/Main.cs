@@ -188,12 +188,13 @@ public partial class Main : Node2D
     #endregion
 
 
-    private void SpawnVirusCannon(bool isUsingSubWindow, float virusProjectileSpeed = 600)
+    private void SpawnVirusCannon(bool isUsingSubWindow, float virusProjectileSpeed = 600, float fireDelay = 2)
     {
         var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
         var virusWarning = virusWarningScene.Instantiate<VirusWarning>();
 
         virusCannon.VirusProjectileSpeed = virusProjectileSpeed;
+        virusCannon.VirusProjectileTimer.WaitTime = fireDelay;
 
         virusWarning.Init(2, new Vector2(128, 128));
 

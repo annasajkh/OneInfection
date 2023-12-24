@@ -98,7 +98,7 @@ libraries = {
 wait_time = 3.0
 
 [node name="VirusCannonSpawnTimer" type="Timer" parent="."]
-wait_time = 18.0
+wait_time = 19.0
 
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
 [connection signal="timeout" from="DamageOverTime" to="." method="OnDamageOverTimeTimeout"]
