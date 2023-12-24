@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cn58or57tlnsv"]
+[gd_scene load_steps=8 format=3 uid="uid://cn58or57tlnsv"]
 
 [ext_resource type="Script" path="res://Src/InstructionScene/Instruction.cs" id="1_aik6c"]
 [ext_resource type="FontFile" uid="uid://dero3d0outurp" path="res://assets/fonts/Terminus TTF Bold.ttf" id="1_vrfd1"]
+[ext_resource type="AudioStream" uid="uid://cy1vim1k61bwa" path="res://assets/sounds/instruction_accepted.wav" id="3_sf2b6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8a38s"]
 font = ExtResource("1_vrfd1")
@@ -50,6 +51,21 @@ tracks/1/keys = {
 "method": &"ChangeToMainScene"
 }]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_sf2b6")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fwk4b"]
 _data = {
@@ -93,3 +109,6 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_fwk4b")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = 5.0

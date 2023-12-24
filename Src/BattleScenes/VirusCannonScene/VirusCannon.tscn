@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://uk1lbqcbec2a"]
+[gd_scene load_steps=17 format=3 uid="uid://uk1lbqcbec2a"]
 
 [ext_resource type="PackedScene" uid="uid://cvqix663dg64b" path="res://Src/ViewWindowScene/ViewWindow.tscn" id="1_5ujly"]
 [ext_resource type="Script" path="res://Src/BattleScenes/VirusCannonScene/VirusCannon.cs" id="1_vk5wk"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dbgeodyl56fvi" path="res://Src/Components/HealthComponent/HealthComponent.tscn" id="5_2jbb8"]
 [ext_resource type="Texture2D" uid="uid://bkh86ambm4eon" path="res://assets/textures/virus/cannon/virus_cannon_projectile.png" id="5_ebeu6"]
 [ext_resource type="PackedScene" uid="uid://def5abv623tku" path="res://Src/Components/VirusHealthBarComponent/VirusHealthBarComponent.tscn" id="6_jtosa"]
+[ext_resource type="AudioStream" uid="uid://btkl4msb6kta" path="res://assets/sounds/virus_cannon_fire.wav" id="8_myg8s"]
+[ext_resource type="AudioStream" uid="uid://bhvbvjb8ll6r" path="res://assets/sounds/virus_cannon_destroyed.wav" id="9_60q0b"]
 
 [sub_resource type="Gradient" id="Gradient_k81h6"]
 offsets = PackedFloat32Array(0.00367647, 1)
@@ -78,6 +80,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DestroyedSound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("9_60q0b")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_8oqgc"]
 resource_name = "fire"
@@ -116,13 +147,14 @@ _data = {
 "fire": SubResource("Animation_8oqgc")
 }
 
-[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("cannonPivot", "virusProjectileTimer", "animationPlayer", "virusHealthBarComponent", "deathParticle", "healthComponent", "window", "virusCannonCarrier")]
+[node name="VirusCannon" type="Node2D" node_paths=PackedStringArray("cannonPivot", "virusProjectileTimer", "animationPlayer", "virusHealthBarComponent", "deathParticle", "fireSound", "healthComponent", "window", "virusCannonCarrier")]
 script = ExtResource("1_vk5wk")
 cannonPivot = NodePath("VirusCannonCarrier")
 virusProjectileTimer = NodePath("VirusProjectileTimer")
 animationPlayer = NodePath("AnimationPlayer")
 virusHealthBarComponent = NodePath("VirusHealthBarComponent")
 deathParticle = NodePath("DeathParticle")
+fireSound = NodePath("FireSound")
 healthComponent = NodePath("HealthComponent")
 window = NodePath("ViewWindow")
 virusCannonCarrier = NodePath("VirusCannonCarrier")
@@ -165,6 +197,13 @@ healthComponent = NodePath("../HealthComponent")
 libraries = {
 "": SubResource("AnimationLibrary_s52tb")
 }
+
+[node name="FireSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_myg8s")
+volume_db = 5.0
+
+[node name="DestroyedSound" type="AudioStreamPlayer" parent="."]
+volume_db = 5.0
 
 [connection signal="timeout" from="VirusProjectileTimer" to="." method="OnVirusProjectileTimerTimeout"]
 [connection signal="Died" from="HealthComponent" to="." method="OnHealthComponentDied"]

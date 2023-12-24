@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dh0slpvtm1xxc"]
+[gd_scene load_steps=8 format=3 uid="uid://dh0slpvtm1xxc"]
 
 [ext_resource type="Texture2D" uid="uid://cjaw47eyonwqb" path="res://assets/textures/virus/virus_spawn_warning.png" id="1_dklnq"]
 [ext_resource type="Script" path="res://Src/BattleScenes/VirusWarning/VirusWarning.cs" id="2_8fqpe"]
+[ext_resource type="AudioStream" uid="uid://bxpowkh1to36q" path="res://assets/sounds/virus_warning.wav" id="3_oopm6"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_imh6p"]
 
@@ -22,6 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_5b7wf"]
 resource_name = "blink"
+length = 0.4
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -30,11 +32,26 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_oopm6")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mk7ut"]
 _data = {
@@ -64,5 +81,7 @@ autoplay = "blink"
 wait_time = 5.0
 one_shot = true
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

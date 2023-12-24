@@ -10,7 +10,7 @@ public partial class VirusCannon : Node2D
     [Export] private AnimationPlayer animationPlayer;
     [Export] private VirusHealthBarComponent virusHealthBarComponent;
     [Export] private GpuParticles2D deathParticle;
-
+    [Export] private AudioStreamPlayer fireSound;
     public VirusHealthBarComponent VirusHealthBarComponent
     {
         get
@@ -103,6 +103,8 @@ public partial class VirusCannon : Node2D
 
     private void Fire()
     {
+        fireSound.Play();
+
         VirusProjectile virusProjectile = virusProjectileScene.Instantiate<VirusProjectile>();
 
         if (!isUsingSubWindow)

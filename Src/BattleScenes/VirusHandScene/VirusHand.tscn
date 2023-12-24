@@ -6,9 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfu7h"]
 size = Vector2(112, 98)
 
-[node name="VirusHand" type="Area2D" groups=["virus"]]
+[node name="VirusHand" type="Area2D" node_paths=PackedStringArray("sprite2D") groups=["virus"]]
 scale = Vector2(2, 2)
 script = ExtResource("1_qxxr8")
+sprite2D = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 1)

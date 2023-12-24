@@ -50,7 +50,7 @@ _data = {
 "goodbye_niko": SubResource("Animation_pfkmk")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusParent", "transparentArenaParent", "damageOverTime", "virusHandSpawnTimer", "virusCannonSpawnTimer")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("niko", "dialogBox", "animationPlayer", "world", "virusProjectileParent", "virusParent", "transparentArenaParent", "damageOverTime", "virusHandSpawnTimer", "virusCannonSpawnTimer", "virusBombTimer")]
 script = ExtResource("1_dc7x5")
 niko = NodePath("Niko")
 dialogBox = NodePath("World/CanvasLayer/DialogBox")
@@ -62,6 +62,7 @@ transparentArenaParent = NodePath("TransparentArenaParent")
 damageOverTime = NodePath("DamageOverTime")
 virusHandSpawnTimer = NodePath("VirusHandSpawnTimer")
 virusCannonSpawnTimer = NodePath("VirusCannonSpawnTimer")
+virusBombTimer = NodePath("VirusBombTimer")
 
 [node name="TransparentArenaParent" type="Node2D" parent="."]
 
@@ -100,7 +101,11 @@ wait_time = 3.0
 [node name="VirusCannonSpawnTimer" type="Timer" parent="."]
 wait_time = 19.0
 
+[node name="VirusBombTimer" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="GoOutside" from="World/FirstHouse" to="." method="OnFirstHouseGoOutside"]
 [connection signal="timeout" from="DamageOverTime" to="." method="OnDamageOverTimeTimeout"]
 [connection signal="timeout" from="VirusHandSpawnTimer" to="." method="OnVirusHandSpawnTimerTimeout"]
 [connection signal="timeout" from="VirusCannonSpawnTimer" to="." method="OnVirusCannonSpawnTimerTimeout"]
+[connection signal="timeout" from="VirusBombTimer" to="." method="OnVirusBombTimerTimeout"]

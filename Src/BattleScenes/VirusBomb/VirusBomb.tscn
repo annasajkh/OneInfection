@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://bpbekobklbcoy"]
+
+[ext_resource type="Texture2D" uid="uid://bwjyk6ue6yph4" path="res://assets/textures/virus/bomb/virus_bomb.png" id="1_fynao"]
+[ext_resource type="Script" path="res://Src/BattleScenes/VirusBomb/VirusBomb.cs" id="1_ty0jd"]
+[ext_resource type="AudioStream" uid="uid://bbih4hhs6x7dp" path="res://assets/sounds/bomb_ssssss.wav" id="3_apeay"]
+[ext_resource type="AudioStream" uid="uid://cwndmn76mh50a" path="res://assets/sounds/bomb_explode.wav" id="4_b4u8j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hy60v"]
+radius = 23.0
+
+[sub_resource type="Curve" id="Curve_uen4j"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.993846, 360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_63umv"]
+curve = SubResource("Curve_uen4j")
+
+[sub_resource type="Gradient" id="Gradient_q70ey"]
+offsets = PackedFloat32Array(0.016835, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 0.215686)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t8l48"]
+gradient = SubResource("Gradient_q70ey")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80vlk"]
+particle_flag_disable_z = true
+angular_velocity_max = 360.0
+angular_velocity_curve = SubResource("CurveTexture_63umv")
+gravity = Vector3(0, 98, 0)
+tangential_accel_min = -50.0
+tangential_accel_max = 50.0
+scale_min = 5.0
+scale_max = 5.0
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_t8l48")
+
+[sub_resource type="Animation" id="Animation_jnshn"]
+resource_name = "bomb_ignited_sound"
+length = 1.4
+loop_mode = 1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BombSound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_apeay")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l1j8i"]
+_data = {
+"bomb_ignited_sound": SubResource("Animation_jnshn")
+}
+
+[node name="VirusBomb" type="Area2D" node_paths=PackedStringArray("bombExplodeSound") groups=["virus"]]
+scale = Vector2(2, 2)
+script = ExtResource("1_ty0jd")
+bombExplodeSound = NodePath("BombExplodeSound")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fynao")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_hy60v")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(19, -20)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_80vlk")
+lifetime = 0.7
+
+[node name="CountDownTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="BombSound" type="AudioStreamPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l1j8i")
+}
+autoplay = "bomb_ignited_sound"
+
+[node name="BombExplodeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_b4u8j")
+volume_db = 10.0
+
+[connection signal="timeout" from="CountDownTimer" to="." method="OnCountDownTimerTimeout"]

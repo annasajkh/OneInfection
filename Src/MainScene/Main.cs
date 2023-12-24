@@ -13,26 +13,30 @@ public partial class Main : Node2D
     [Export] private Niko niko;
     [Export] private DialogBox dialogBox;
     [Export] private AnimationPlayer animationPlayer;
+
     [Export] private Node2D world;
     [Export] private Node2D virusProjectileParent;
     [Export] private Node2D virusParent;
     [Export] private Node2D transparentArenaParent;
+
     [Export] private Timer damageOverTime;
     [Export] private Timer virusHandSpawnTimer;
     [Export] private Timer virusCannonSpawnTimer;
+    [Export] private Timer virusBombTimer;
 
     public bool IsMainWindowShaking { get; set; }
 
     private PackedScene virusCannonScene;
     private PackedScene virusHandScene;
-
     private PackedScene transparentArenaScene;
     private PackedScene virusWarningScene;
+    private PackedScene virusBombScene;
 
     private Window mainWindow;
     private bool forceCenter = true;
 
     private Stack<VirusCannon> virusCannons = new Stack<VirusCannon>();
+    private Stack<VirusBomb> virusBombs = new Stack<VirusBomb>();
     private Stack<VirusHand> virusHands = new Stack<VirusHand>();
 
     private static VirusHandMoveDir[] virusHandMoveDirs = new VirusHandMoveDir[] { VirusHandMoveDir.LeftRight, VirusHandMoveDir.RightLeft, VirusHandMoveDir.TopDown, VirusHandMoveDir.DownTop };
@@ -41,9 +45,9 @@ public partial class Main : Node2D
     {
         virusCannonScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusCannonScene/VirusCannon.tscn");
         virusHandScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusHandScene/VirusHand.tscn");
-
         transparentArenaScene = GD.Load<PackedScene>("res://Src/BattleScenes/TransparentArena/TransparentArena.tscn");
         virusWarningScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusWarning/VirusWarning.tscn");
+        virusBombScene = GD.Load<PackedScene>("res://Src/BattleScenes/VirusBomb/VirusBomb.tscn");
 
         mainWindow = GetWindow();
         mainWindow.Title = "Oneshot";
@@ -122,7 +126,7 @@ public partial class Main : Node2D
 
         var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
 
-        virusCannon.Init(Util.ToWorldPosition(virusCannon.Window, new Vector2I(DisplayServer.ScreenGetSize().X / 2 - virusCannon.Window.Size.X / 2, 32)), niko, virusProjectileParent, true);
+        virusCannon.Init(Util.ToWorldPosition(virusCannon.Window.Size, new Vector2I(DisplayServer.ScreenGetSize().X / 2 - virusCannon.Window.Size.X / 2, 32)), niko, virusProjectileParent, true);
         virusCannon.Window.WindowDestroyed += Phase1End;
 
         virusParent.AddChild(virusCannon);
@@ -166,7 +170,9 @@ public partial class Main : Node2D
         damageOverTime.Start();
 
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 600);
+        SpawnVirusBomb();
 
+        virusBombTimer.Start();
 
         dialogBox.ConversationFinished += Phase2End;
     }
@@ -180,9 +186,18 @@ public partial class Main : Node2D
         virusHandSpawnTimer.Start();
         virusCannonSpawnTimer.Start();
 
+        virusBombTimer.Stop();
+
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
+    }
+
+    private void End()
+    {
+        damageOverTime.Stop();
+        virusHandSpawnTimer.Stop();
+        virusCannonSpawnTimer.Stop();
+        virusBombTimer.Stop();
     }
 
     #endregion
@@ -200,12 +215,12 @@ public partial class Main : Node2D
 
         Vector2I spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
 
-        while ((spawnPosition - Util.ToScreenPosition(niko.Window, (Vector2I)niko.Position)).Length() < 750)
+        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 750)
         {
             spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
         }
 
-        spawnPosition = Util.ToWorldPosition(virusCannon.Window, spawnPosition);
+        spawnPosition = Util.ToWorldPosition(virusCannon.Window.Size, spawnPosition);
 
         virusWarning.Position = spawnPosition;
         virusCannon.Init(spawnPosition, niko, virusProjectileParent, isUsingSubWindow);
@@ -214,12 +229,40 @@ public partial class Main : Node2D
         virusParent.AddChild(virusWarning);
         virusWarning.SpawnVirus += ActuallySpawnVirusCannon;
         virusCannons.Push(virusCannon);
-
     }
 
     private void ActuallySpawnVirusCannon()
     {
         virusParent.AddChild(virusCannons.Pop());
+    }
+
+    private void SpawnVirusBomb()
+    {
+        var virusBomb = virusBombScene.Instantiate<VirusBomb>();
+        var virusWarning = virusWarningScene.Instantiate<VirusWarning>();
+
+        virusWarning.Init(2, new Vector2(128, 128));
+
+        Vector2I spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
+
+        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 500)
+        {
+            spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
+        }
+
+        spawnPosition = Util.ToWorldPosition(new Vector2I(128, 128), spawnPosition);
+
+        virusWarning.Position = spawnPosition;
+        virusBomb.Init(spawnPosition, virusProjectileParent);
+
+        virusParent.AddChild(virusWarning);
+        virusWarning.SpawnVirus += ActuallySpawnVirusBomb;
+        virusBombs.Push(virusBomb);
+    }
+
+    private void ActuallySpawnVirusBomb()
+    {
+        virusParent.AddChild(virusBombs.Pop());
     }
 
 
@@ -279,7 +322,7 @@ public partial class Main : Node2D
         niko.Window.Visible = true;
         niko.IsOutside = true;
 
-        niko.Position = Util.ToWorldPosition(niko.Window, nikoWindowOffset);
+        niko.Position = Util.ToWorldPosition(niko.Window.Size, nikoWindowOffset);
     }
 
     public override void _Process(double delta)
@@ -329,6 +372,10 @@ public partial class Main : Node2D
     {
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
+    }
+
+    private void OnVirusBombTimerTimeout()
+    {
+        SpawnVirusBomb();
     }
 }

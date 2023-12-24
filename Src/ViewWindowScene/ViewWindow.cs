@@ -36,7 +36,7 @@ public partial class ViewWindow : Window
         }
 
         camera.Position = positionToView.Position;
-        Position = Util.ToScreenPosition(this, (Vector2I)positionToView.Position);
+        Position = Util.ToScreenPosition(Size, (Vector2I)positionToView.Position);
     }
 
     private void OnViewWindowCloseRequested()
