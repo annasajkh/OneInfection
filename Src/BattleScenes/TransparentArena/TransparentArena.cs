@@ -13,7 +13,15 @@ public partial class TransparentArena : Node2D
 
     public override void _Ready()
     {
-        window.Size = DisplayServer.ScreenGetSize();
+        window.Size = DisplayServer.ScreenGetSize() - new Vector2I(8, 8);
         window.MoveToCenter();
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsKeyPressed(Key.Escape))
+        {
+            GetTree().Quit();
+        }
     }
 }

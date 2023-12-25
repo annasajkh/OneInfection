@@ -13,6 +13,8 @@ config_version=5
 config/name="OneInfection"
 run/main_scene="res://Src/TitleScreenScene/TitleScreen.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
+boot_splash/bg_color=Color(0.117647, 0.054902, 0.054902, 1)
+boot_splash/image="res://assets/textures/screen/black_screen.png"
 config/icon="res://icon.png"
 
 [display]

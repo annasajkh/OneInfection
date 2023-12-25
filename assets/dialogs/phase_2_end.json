@@ -3,49 +3,49 @@
 		{
 			"face": "virus/virus_pancakes",
 			"dialog": "I really don't care",
-			"delayToNext": 10
+			"delayToNext": 3
 		},
 
 		{
 			"face": "virus/virus_83c",
 			"dialog": "THIS IS SO MUCH FUN!!!!!",
-			"delayToNext": 10
+			"delayToNext": 5
 		},
 
 		{
 			"face": "virus/virus_speak",
 			"dialog": "I REALLY LOVE IT AHAHAHHA",
-			"delayToNext": 10
+			"delayToNext": 5
 		},
 
 		{
 			"face": "virus/virus_smile",
 			"dialog": "MORE MORE MORE MORE",
-			"delayToNext": 10
+			"delayToNext": 5
 		},
 
 		{
 			"face": "virus/virus_huh",
 			"dialog": "You are so focus right now huh",
-			"delayToNext": 10
+			"delayToNext": 5
 		},
 
 		{
 			"face": "virus/virus5",
-			"dialog": "I don't you even read this sentence",
-			"delayToNext": 10
+			"dialog": "I don't think you even read this dialog right now",
+			"delayToNext": 5
 		},
 
 		{
 			"face": "virus/virus_83c",
 			"dialog": "So i can say silly things hehehe",
-			"delayToNext": 10
+			"delayToNext": 5
 		},
 		
 		{
 			"face": "virus/virus_speak",
 			"dialog": "Niko is a cat",
-			"delayToNext": 10
+			"delayToNext": 5
 		}
 	]
 }

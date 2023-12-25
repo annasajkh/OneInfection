@@ -1,0 +1,81 @@
+﻿ {
+  "conversation": [
+    {
+      "face": "niko/niko",
+      "dialog": "Thank god the world machine you are back!",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en_huh",
+      "dialog": "Huh niko what happen to me? i don't remember anything",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "niko/niko",
+      "dialog": "You were infected by a virus",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en_shock",
+      "dialog": "A virus? that's impossible i have my antivirus software running",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en_eyeclosed2",
+      "dialog": "I guess this virus must have been really strong",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en_distressed2",
+      "dialog": "I'm sorry for the trouble this has cause you and %playerName%",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "niko/niko",
+      "dialog": "It's alright everything is alright now the virus is also disappeared suddenly for some reason",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "niko/niko",
+      "dialog": "I guess that's because of your antivirus right",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en_speak",
+      "dialog": "Yeah i guess so",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en5",
+      "dialog": "Anyways niko you can go home now",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "niko/niko",
+      "dialog": "Oh yeah right! can i speak to %playerName% before i go?",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "en/en_distressed2",
+      "dialog": "I'm sorry niko unfortunately my communication device is broken",
+      "delayToNext": 0.5
+    },
+
+    {
+      "face": "niko/niko",
+      "dialog": "Oh it's alright at least %playerName% can still hear me",
+      "delayToNext": 0.5
+    }
+  ]
+}

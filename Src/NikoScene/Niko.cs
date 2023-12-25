@@ -22,6 +22,8 @@ public partial class Niko : CharacterBody2D
 
     public bool IsOutside { get; set; }
 
+    public bool isNikoCanGoOutsideScreen = true;
+
     public ViewWindow Window
     {
         get
@@ -59,6 +61,7 @@ public partial class Niko : CharacterBody2D
     [Export] private ViewWindow window;
 
     private bool isBright;
+
 
     public override void _Ready()
     {
@@ -188,31 +191,34 @@ public partial class Niko : CharacterBody2D
         // Prevent niko from going outside screen boundary
         if (IsOutside)
         {
-            Vector2I screenSize = DisplayServer.ScreenGetSize();
-
-            if (window.Position.X + window.Size.X / 2 + 24 > screenSize.X)
+            if (isNikoCanGoOutsideScreen)
             {
-                float collisionDepth = Mathf.Abs(screenSize.X - (window.Position.X + window.Size.X / 2 + 24));
+                Vector2I screenSize = DisplayServer.ScreenGetSize();
 
-                Position += Vector2.Left * collisionDepth;
-            }
-            else if (window.Position.X + window.Size.X / 2 - 24 < 0)
-            {
-                float collisionDepth = Mathf.Abs(window.Position.X + window.Size.X / 2 - 24);
+                if (window.Position.X + window.Size.X / 2 + 24 > screenSize.X)
+                {
+                    float collisionDepth = Mathf.Abs(screenSize.X - (window.Position.X + window.Size.X / 2 + 24));
 
-                Position += Vector2.Right * collisionDepth;
-            }
-            else if (window.Position.Y + window.Size.Y / 2 + 32 > screenSize.Y)
-            {
-                float collisionDepth = Mathf.Abs(screenSize.Y - (window.Position.Y + window.Size.Y / 2 + 32));
+                    Position += Vector2.Left * collisionDepth;
+                }
+                else if (window.Position.X + window.Size.X / 2 - 24 < 0)
+                {
+                    float collisionDepth = Mathf.Abs(window.Position.X + window.Size.X / 2 - 24);
 
-                Position += Vector2.Up * collisionDepth;
-            }
-            else if (window.Position.Y + window.Size.Y / 2 - 32 < 0)
-            {
-                float collisionDepth = Mathf.Abs(window.Position.Y + window.Size.Y / 2 - 32);
+                    Position += Vector2.Right * collisionDepth;
+                }
+                else if (window.Position.Y + window.Size.Y / 2 + 32 > screenSize.Y)
+                {
+                    float collisionDepth = Mathf.Abs(screenSize.Y - (window.Position.Y + window.Size.Y / 2 + 32));
 
-                Position += Vector2.Down * collisionDepth;
+                    Position += Vector2.Up * collisionDepth;
+                }
+                else if (window.Position.Y + window.Size.Y / 2 - 32 < 0)
+                {
+                    float collisionDepth = Mathf.Abs(window.Position.Y + window.Size.Y / 2 - 32);
+
+                    Position += Vector2.Down * collisionDepth;
+                }
             }
         }
 

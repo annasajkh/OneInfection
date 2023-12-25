@@ -1,0 +1,22 @@
+{
+	"conversation":
+	[
+		{
+			"face": "niko/niko",
+			"dialog": "%playerName% thank you for helping me fight the virus",
+			"delayToNext": 0.5
+		},
+
+		{
+			"face": "niko/niko",
+			"dialog": "Goodbye %playerName% and goodbye the world machine",
+			"delayToNext": 0.5
+		},
+
+		{
+			"face": "en/en_speak",
+			"dialog": "Goodbye niko...",
+			"delayToNext": 0.5
+		}
+	]
+}

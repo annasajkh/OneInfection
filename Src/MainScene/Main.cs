@@ -24,7 +24,7 @@ public partial class Main : Node2D
     [Export] private Timer virusCannonSpawnTimer;
     [Export] private Timer virusBombTimer;
 
-    public bool IsMainWindowShaking { get; set; }
+    [Export] private bool isMainWindowShaking;
 
     private PackedScene virusCannonScene;
     private PackedScene virusHandScene;
@@ -80,7 +80,7 @@ public partial class Main : Node2D
     {
         dialogBox.ConversationFinished -= VirusInfectingTWM;
 
-        IsMainWindowShaking = true;
+        isMainWindowShaking = true;
 
         dialogBox.Play("virus_infecting_twm");
 
@@ -92,7 +92,7 @@ public partial class Main : Node2D
     {
         dialogBox.ConversationFinished -= VirusTakingOverTWM;
 
-        IsMainWindowShaking = false;
+        isMainWindowShaking = false;
 
         world.Modulate = new Color(1, 0, 0);
         mainWindow.Title = "OneInfection";
@@ -170,7 +170,7 @@ public partial class Main : Node2D
         damageOverTime.Start();
 
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 600);
-        SpawnVirusBomb();
+        SpawnVirusBomb(virusProjectileSpeed: 600);
 
         virusBombTimer.Start();
 
@@ -186,22 +186,82 @@ public partial class Main : Node2D
         virusHandSpawnTimer.Start();
         virusCannonSpawnTimer.Start();
 
-        virusBombTimer.Stop();
+        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
 
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
+        dialogBox.ConversationFinished += End;
     }
 
     private void End()
     {
+        dialogBox.ConversationFinished -= End;
+
         damageOverTime.Stop();
         virusHandSpawnTimer.Stop();
         virusCannonSpawnTimer.Stop();
         virusBombTimer.Stop();
+
+        foreach (var child in virusParent.GetChildren())
+        {
+            child.QueueFree();
+        }
+
+        foreach (var child in virusProjectileParent.GetChildren())
+        {
+            child.QueueFree();
+        }
+
+        animationPlayer.Play("end");
+
+        niko.IsControlled = false;
+        niko.Velocity = Vector2.Zero;
+        niko.Face(Direction.Up);
+        niko.IsWalking = false;
+
+        Vector2I initialWindowPosition = mainWindow.Position;
+        Vector2I initialWindowSize = mainWindow.Size;
+
+        Vector2I nikoWindowOffset = initialWindowPosition;
+
+        nikoWindowOffset.X += initialWindowSize.X / 2 - niko.Window.Size.X / 2 + 10;
+        nikoWindowOffset.Y += initialWindowSize.Y - niko.Window.Size.Y / 2 - 32 + 200;
+
+        niko.Position = Util.ToWorldPosition(niko.Window.Size, nikoWindowOffset);
+
+        dialogBox.ConversationFinished += FinalGoodbye;
+    }
+    private void FinalGoodbye()
+    {
+        dialogBox.ConversationFinished -= FinalGoodbye;
+
+        dialogBox.Play("final_goodbye");
+
+        dialogBox.ConversationFinished += ForRealFinalGoodbye;
+    }
+
+    private void ForRealFinalGoodbye()
+    {
+        dialogBox.ConversationFinished -= ForRealFinalGoodbye;
+
+        niko.Face(Direction.Down);
+        niko.isNikoCanGoOutsideScreen = false;
+
+        dialogBox.Play("for_real_final_goodbye");
+        dialogBox.ConversationFinished += NikoWalkHome;
+    }
+
+    private void NikoWalkHome()
+    {
+        dialogBox.ConversationFinished -= NikoWalkHome;
+
+        animationPlayer.Play("niko_walk_home");
     }
 
     #endregion
 
+    public void QuitApp()
+    {
+        GetTree().Quit();
+    }
 
     private void SpawnVirusCannon(bool isUsingSubWindow, float virusProjectileSpeed = 600, float fireDelay = 2)
     {
@@ -236,7 +296,7 @@ public partial class Main : Node2D
         virusParent.AddChild(virusCannons.Pop());
     }
 
-    private void SpawnVirusBomb()
+    private void SpawnVirusBomb(float virusProjectileSpeed)
     {
         var virusBomb = virusBombScene.Instantiate<VirusBomb>();
         var virusWarning = virusWarningScene.Instantiate<VirusWarning>();
@@ -245,7 +305,7 @@ public partial class Main : Node2D
 
         Vector2I spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
 
-        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 500)
+        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 750)
         {
             spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
         }
@@ -253,7 +313,7 @@ public partial class Main : Node2D
         spawnPosition = Util.ToWorldPosition(new Vector2I(128, 128), spawnPosition);
 
         virusWarning.Position = spawnPosition;
-        virusBomb.Init(spawnPosition, virusProjectileParent);
+        virusBomb.Init(spawnPosition, virusProjectileParent, virusProjectileSpeed);
 
         virusParent.AddChild(virusWarning);
         virusWarning.SpawnVirus += ActuallySpawnVirusBomb;
@@ -308,6 +368,14 @@ public partial class Main : Node2D
         virusParent.AddChild(virusHands.Pop());
     }
 
+    public void MakeEverythingNormalAgain()
+    {
+        world.Modulate = new Color(1, 1, 1);
+        mainWindow.Title = "Oneshot";
+
+        DisplayServer.SetIcon(GD.Load<Texture2D>("res://icon.png").GetImage());
+    }
+
     private void OnFirstHouseGoOutside()
     {
         Vector2I initialWindowPosition = mainWindow.Position;
@@ -337,7 +405,7 @@ public partial class Main : Node2D
             dialogBox.SkipConversation();
         }
 
-        if (IsMainWindowShaking)
+        if (isMainWindowShaking)
         {
             mainWindow.Position += new Vector2I(GD.RandRange(-20, 20), GD.RandRange(-20, 20));
 
@@ -371,11 +439,10 @@ public partial class Main : Node2D
     private void OnVirusCannonSpawnTimerTimeout()
     {
         SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
     }
 
     private void OnVirusBombTimerTimeout()
     {
-        SpawnVirusBomb();
+        SpawnVirusBomb(virusProjectileSpeed: 600);
     }
 }

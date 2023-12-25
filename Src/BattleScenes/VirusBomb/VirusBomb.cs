@@ -9,10 +9,13 @@ public partial class VirusBomb : Area2D
 
     [Export] private AudioStreamPlayer bombExplodeSound;
 
-    public void Init(Vector2I position, Node2D virusProjectileParent)
+    private float virusProjectileSpeed;
+
+    public void Init(Vector2I position, Node2D virusProjectileParent, float virusProjectileSpeed)
     {
         Position = position;
         VirusProjectileParent = virusProjectileParent;
+        this.virusProjectileSpeed = virusProjectileSpeed;
     }
 
     public override void _Ready()
@@ -33,7 +36,7 @@ public partial class VirusBomb : Area2D
         {
             var virusProjectile = virusProjectileScene.Instantiate<VirusProjectile>();
 
-            virusProjectile.Init(Position, Vector2.One.Rotated(Mathf.DegToRad(i)), 600, false);
+            virusProjectile.Init(Position, Vector2.One.Rotated(Mathf.DegToRad(i)), virusProjectileSpeed, false);
 
             VirusProjectileParent.AddChild(virusProjectile);
         }
