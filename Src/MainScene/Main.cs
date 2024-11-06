@@ -277,7 +277,9 @@ public partial class Main : Node2D
 
         Vector2I spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
 
-        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 750)
+        GD.Print(DisplayServer.ScreenGetSize().Length());
+
+        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < DisplayServer.ScreenGetSize().Length() * 0.3)
         {
             spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
         }
@@ -307,7 +309,10 @@ public partial class Main : Node2D
 
         Vector2I spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
 
-        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 900)
+
+        GD.Print(DisplayServer.ScreenGetSize().Length());
+
+        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < DisplayServer.ScreenGetSize().Length() * 0.3)
         {
             spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
         }
