@@ -2,7 +2,7 @@
 	"conversation": [
 		{
 			"face": "virus/virus_smile",
-			"dialog": "How about we make it faster?",
+			"dialog": "How about we make it faster? and maybe you friend %playerName% can do something about it",
 			"delayToNext": 1000
 		}
 	]

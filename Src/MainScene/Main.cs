@@ -6,8 +6,6 @@ using OneInfection.Src.Utils;
 using System.Collections.Generic;
 
 
-namespace OneInfection.Src.MainScene;
-
 public partial class Main : Node2D
 {
     [Export] private Niko niko;
@@ -38,6 +36,8 @@ public partial class Main : Node2D
     private Stack<VirusCannon> virusCannons = new Stack<VirusCannon>();
     private Stack<VirusBomb> virusBombs = new Stack<VirusBomb>();
     private Stack<VirusHand> virusHands = new Stack<VirusHand>();
+
+    private static bool canSkipConversation = true;
 
     private static VirusHandMoveDir[] virusHandMoveDirs = new VirusHandMoveDir[] { VirusHandMoveDir.LeftRight, VirusHandMoveDir.RightLeft, VirusHandMoveDir.TopDown, VirusHandMoveDir.DownTop };
 
@@ -142,7 +142,7 @@ public partial class Main : Node2D
         {
             if (child is VirusCannon virusCannon)
             {
-                virusCannon.VirusProjectileSpeed = 1000;
+                virusCannon.VirusProjectileSpeed = 400;
                 dialogBox.Play("phase_1", isAutoPlay: true);
             }
         }
@@ -169,8 +169,8 @@ public partial class Main : Node2D
 
         damageOverTime.Start();
 
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 600);
-        SpawnVirusBomb(virusProjectileSpeed: 600);
+        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 300);
+        SpawnVirusBomb(virusProjectileSpeed: 300);
 
         virusBombTimer.Start();
 
@@ -186,13 +186,15 @@ public partial class Main : Node2D
         virusHandSpawnTimer.Start();
         virusCannonSpawnTimer.Start();
 
-        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 400);
+        SpawnVirusCannon(isUsingSubWindow: false, virusProjectileSpeed: 300);
 
         dialogBox.ConversationFinished += End;
     }
 
     private void End()
     {
+        canSkipConversation = false;
+
         dialogBox.ConversationFinished -= End;
 
         damageOverTime.Stop();
@@ -263,7 +265,7 @@ public partial class Main : Node2D
         GetTree().Quit();
     }
 
-    private void SpawnVirusCannon(bool isUsingSubWindow, float virusProjectileSpeed = 600, float fireDelay = 2)
+    private void SpawnVirusCannon(bool isUsingSubWindow, float virusProjectileSpeed, float fireDelay = 2)
     {
         var virusCannon = virusCannonScene.Instantiate<VirusCannon>();
         var virusWarning = virusWarningScene.Instantiate<VirusWarning>();
@@ -305,7 +307,7 @@ public partial class Main : Node2D
 
         Vector2I spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
 
-        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 750)
+        while ((spawnPosition - Util.ToScreenPosition(niko.Window.Size, (Vector2I)niko.Position)).Length() < 900)
         {
             spawnPosition = new Vector2I(GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().X - 320 / 2), GD.RandRange(320 / 2, DisplayServer.ScreenGetSize().Y - 320 / 2));
         }
@@ -386,11 +388,11 @@ public partial class Main : Node2D
         nikoWindowOffset.X += initialWindowSize.X / 2 - niko.Window.Size.X / 2 + 10;
         nikoWindowOffset.Y += initialWindowSize.Y - niko.Window.Size.Y / 2 - 32;
 
+        niko.Position = Util.ToWorldPosition(niko.Window.Size, nikoWindowOffset);
+
         niko.IsBright = false;
         niko.Window.Visible = true;
         niko.IsOutside = true;
-
-        niko.Position = Util.ToWorldPosition(niko.Window.Size, nikoWindowOffset);
     }
 
     public override void _Process(double delta)
@@ -400,7 +402,7 @@ public partial class Main : Node2D
             GetTree().Quit();
         }
 
-        if (Input.IsActionJustPressed("skip_conversation"))
+        if (Input.IsActionJustPressed("skip_conversation") && canSkipConversation)
         {
             dialogBox.SkipConversation();
         }
@@ -443,6 +445,6 @@ public partial class Main : Node2D
 
     private void OnVirusBombTimerTimeout()
     {
-        SpawnVirusBomb(virusProjectileSpeed: 600);
+        SpawnVirusBomb(virusProjectileSpeed: 400);
     }
 }

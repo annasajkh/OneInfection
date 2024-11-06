@@ -1,6 +1,7 @@
 using Godot;
 using OneInfection.Src.BattleScenes.VirusProjectileScene;
 
+
 public partial class VirusBomb : Area2D
 {
     public Node2D VirusProjectileParent { get; private set; }

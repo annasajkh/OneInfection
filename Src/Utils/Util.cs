@@ -32,6 +32,7 @@ public static class Util
 
     public static Vector2I ToScreenPosition(Vector2I sizeOffset, Vector2I worldPosition)
     {
+
         return worldPosition - Global.WorldOutsideOffset - sizeOffset / 2;
     }
 }

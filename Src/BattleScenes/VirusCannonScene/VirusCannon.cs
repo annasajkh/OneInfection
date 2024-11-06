@@ -11,6 +11,7 @@ public partial class VirusCannon : Node2D
     [Export] private VirusHealthBarComponent virusHealthBarComponent;
     [Export] private GpuParticles2D deathParticle;
     [Export] private AudioStreamPlayer fireSound;
+
     public VirusHealthBarComponent VirusHealthBarComponent
     {
         get
@@ -55,7 +56,7 @@ public partial class VirusCannon : Node2D
         }
     }
 
-    public float VirusProjectileSpeed { get; set; } = 600;
+    public float VirusProjectileSpeed { get; set; } = 200;
 
     public Node2D Target { get; private set; }
     public Node2D VirusProjectileParent { get; private set; }

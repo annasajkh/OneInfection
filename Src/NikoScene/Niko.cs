@@ -69,6 +69,11 @@ public partial class Niko : CharacterBody2D
         IsBright = true;
     }
 
+    public override void _Process(double delta)
+    {
+
+    }
+
     public void Face(Direction direction)
     {
         CurrentDirection = direction;
@@ -189,6 +194,7 @@ public partial class Niko : CharacterBody2D
 
 
         // Prevent niko from going outside screen boundary
+
         if (IsOutside)
         {
             if (isNikoCanGoOutsideScreen)
